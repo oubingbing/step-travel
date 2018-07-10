@@ -1,0 +1,12 @@
+{
+  "pages": [
+    "pages/compare_face/face",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#66CDAA",
+    "navigationBarTitleText": "天生情侣脸",
+    "navigationBarTextStyle": "white"
+  }
+}
