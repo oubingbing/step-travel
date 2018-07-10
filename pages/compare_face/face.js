@@ -45,6 +45,41 @@ Page({
         }
       }
     })
+
+    wx.getSetting({ 
+      success: (res) => {
+        if (res.authSetting['scope.werun']) {
+          wx.login({
+            success: res => {
+              // 发送 res.code 到后台换取 openId, sessionKey, unionId
+              console.log("res.code:" + res.code);
+              let code = res.code;
+              wx.getWeRunData({
+                success(res) {
+                  const encryptedData = res.encryptedData;
+                  const iv = res.iv;
+                  console.log("步数数据：" + encryptedData);
+                  that.postRunData(encryptedData, iv, code);
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+  },
+
+  postRunData: function (encryptedData,iv,code){
+    app.http('post', `/run_data`,
+      {
+        encrypted_data: encryptedData,
+        iv: iv,
+        code: code
+      }, res => {
+        
+        console.log(res);
+
+      });
   },
 
   /**
@@ -67,6 +102,7 @@ Page({
       });
       //获取二维码
       _this.getQrCode(_this);
+      wx.authorize({ scope: "scope.werun" })
     });
   },
 

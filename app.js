@@ -2,11 +2,11 @@
 App({
   onLaunch: function () {
 
-    this.globalData.appKey = 'RF7r6G9tJa5qlkou';
+    this.globalData.appKey = 'rEpRe1iuBg4q1KGB';
 
     //设置基本接口全局变量
-    this.globalData.apiUrl = 'https://lianyan.kucaroom.com/api/wechat';
-    //this.globalData.apiUrl = 'http://localhost:8000/api/wechat';
+    //this.globalData.apiUrl = 'https://lianyan.kucaroom.com/api/wechat';
+    this.globalData.apiUrl = 'http://localhost:8000/api/wechat';
   
     //七牛图片外链域名
     this.globalData.imageUrl = 'http://image.kucaroom.com/';
@@ -28,7 +28,7 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log(res);
+        console.log('login:' + JSON.stringify(res));
         this.getUserInfo(res.code, _method, _url, _data, callback);
       }
     })
@@ -50,7 +50,7 @@ App({
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
 
-              console.log("用户信息：" + JSON.stringify(res.userInfo));
+              console.log("用户信息：" + JSON.stringify(res));
 
               wx.request({
                 url: this.globalData.apiUrl + '/auth/login?type=weChat',
