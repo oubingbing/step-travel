@@ -59,7 +59,7 @@ Page({
     ],
   },
   onLoad:function(){
-    //23.104997,114.428101
+    
     let coords = [[23.104997, 114.428101], [22.543001, 114.071045]];// [[lat,lng]];
     let lens = distance(coords);
     console.log(lens+'米'); //单位米
