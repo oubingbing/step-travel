@@ -1,12 +1,33 @@
 {
   "pages": [
     "pages/compare_face/face",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/map/map"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#66CDAA",
     "navigationBarTitleText": "步数之旅",
     "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#515151",
+    "selectedColor": "#66CDAA",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/compare_face/face",
+        "iconPath": "image/saylove.png",
+        "selectedIconPath": "image/select-saylove.png",
+        "text": "表白墙"
+      },
+      {
+        "pagePath": "pages/map/map",
+        "iconPath": "image/select-saylove.png",
+        "selectedIconPath": "image/select-saylove.png",
+        "text": "卖舍友"
+      }
+    ]
   }
 }

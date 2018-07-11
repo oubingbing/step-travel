@@ -1,44 +1,44 @@
-var order = ['red', 'yellow', 'blue', 'green', 'red'];
-var data = [
-  { "color":"red","id":"a"},
-  { "color": "yellow", "id": "b" },
-  { "color": "blue", "id": "c" },
-  { "color": "red", "id": "d" },
-  { "color": "green", "id": "e" },
-  { "color": "yellow", "id": "f" },
-  { "color": "green", "id": "g" },
-  { "color": "blue", "id": "h" },
-  { "color": "red", "id": "o" },
-];
-
 Page({
   data: {
-    toView: 'red',
-    scrollTop: 100,
-    list:data
+    markers: [{
+      iconPath: "/resources/others.png",
+      id: 0,
+      latitude: 23.099994,
+      longitude: 113.324520,
+      width: 50,
+      height: 50
+    }],
+    polyline: [{
+      points: [{
+        longitude: 113.3245211,
+        latitude: 23.10229
+      }, {
+        longitude: 90.324520,
+        latitude: 23.21229
+      }],
+      color: "#FF0000DD",
+      width: 2,
+      dottedLine: true
+    }],
+    controls: [{
+      id: 1,
+      iconPath: '/resources/location.png',
+      position: {
+        left: 0,
+        top: 300 - 50,
+        width: 50,
+        height: 50
+      },
+      clickable: true
+    }]
   },
-  upper: function (e) {
-    console.log(e)
+  regionchange(e) {
+    console.log(e.type)
   },
-  lower: function (e) {
-    console.log(e)
+  markertap(e) {
+    console.log(e.markerId)
   },
-  scroll: function (e) {
-    console.log(e)
-  },
-  tap: function (e) {
-    for (var i = 0; i < order.length; ++i) {
-      if (order[i] === this.data.toView) {
-        this.setData({
-          toView: order[i + 1]
-        })
-        break
-      }
-    }
-  },
-  tapMove: function (e) {
-    this.setData({
-      scrollTop: this.data.scrollTop + 10
-    })
+  controltap(e) {
+    console.log(e.controlId)
   }
 })

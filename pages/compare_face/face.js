@@ -70,6 +70,9 @@ Page({
   },
 
   postRunData: function (encryptedData,iv,code){
+
+    return false;
+
     app.http('post', `/run_data`,
       {
         encrypted_data: encryptedData,
@@ -103,6 +106,7 @@ Page({
       //获取二维码
       _this.getQrCode(_this);
       wx.authorize({ scope: "scope.werun" })
+      wx.authorize({ scope: "scope.userLocation" })
     });
   },
 
