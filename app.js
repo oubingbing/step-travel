@@ -120,40 +120,6 @@ App({
 
   },
 
-  /** 
-   * 获取七牛上传token
-   */
-  setUploadToken: function (call) {
-
-    this.http('GET', '/upload_token', {}, function (res) {
-
-      console.log('150行：'+res.data);
-
-      if(res.data.data != null){
-        var token = res.data.data.uptoken;
-
-        if (call) {
-          call(token);
-        }
-
-        console.log('设置七牛upload token' + token);
-
-        wx.setStorageSync('uploadToken', token);
-      }
-
-    });
-
-  },
-
-  /** 
-   * 获取七牛上传token
-   */
-  getUploadToken: function (callback) {
-
-    this.setUploadToken(callback);
-
-  },
-
   /**
    * 收集form id
    */

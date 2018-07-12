@@ -1,0 +1,57 @@
+<view class='container'>
+
+  <!-- 头部 -->
+  <view class='header'>
+    <view class='header-content'>
+      <view class='step-content'>
+        <view class='today-step'>
+          <view class='label'>今天</view>
+          <view class='step'>7300</view>
+        </view>
+        <view class='total-step'>
+          <view class='label'>累计</view>
+          <view class='step'>100.45万步</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 具体步数内容 -->
+  <view class='content-container'>
+
+    <view class='content'>
+      <view class='item'>
+          <view class='left'>
+            <view class='date'>2018-10-1</view>
+          </view>
+          <view class='right'>
+            <view class='step-number'>9650</view>
+          </view>
+      </view>
+    </view>
+
+    <view class='content'>
+      <view class='item'>
+          <view class='left'>
+            <view class='date'>2018-10-1</view>
+          </view>
+          <view class='right'>
+            <view class='step-number'>9650</view>
+          </view>
+      </view>
+    </view>
+
+    <view class='content'>
+      <view class='item'>
+          <view class='left'>
+            <view class='date'>2018-10-1</view>
+          </view>
+          <view class='right'>
+            <view class='step-number'>9650</view>
+          </view>
+      </view>
+    </view>
+
+  </view>
+
+</view>

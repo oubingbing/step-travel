@@ -3,7 +3,7 @@
   <view class="page-section page-section-gap">
     <map
       id="myMap"
-      style="width: 100%; height: 300px;"
+      style="width: 100%; height: 350px;"
       latitude="{{latitude}}"
       longitude="{{longitude}}"
       markers="{{markers}}"
@@ -12,15 +12,83 @@
       show-location
     ></map>
   </view>
-  <view class="btn-area">
-      <button bindtap="chooseLocation" 
-            class="page-body-button" 
-            type="primary">选择坐标</button>
-    <button bindtap="getCenterLocation" 
-            class="page-body-button" 
-            type="primary">获取位置</button>
-    <button bindtap="moveToLocation" class="page-body-button" type="primary">移动位置</button>
-    <button bindtap="translateMarker" class="page-body-button" type="primary">移动标注</button>
-    <button bindtap="includePoints" class="page-body-button" type="primary">缩放视野展示所有经纬度</button>
+
+    <!-- 具体步数内容 -->
+  <view class='content-container'>
+
+    <view class='content'>
+
+      <view class='item'>
+          <view class='left'>
+            <view class='date'>2018-10-1</view>
+          </view>
+          <view class='right'>
+            <view class='travel-log'>
+              <view class='travel-point'>
+                <view class='left-item'>
+                  <view>经度：120</view>
+                </view>
+                <view class='rightitem'>
+                  <view>维度：32</view>
+                </view>
+              </view>
+
+              <view class='step-number'>
+                <view class='travel-label'>行程:</view>
+                <view class='travel-number'>3.2公里</view>
+              </view>
+
+              <view class='address'>
+                <view class='address-label'>地点：</view>
+                <view class='address-content'>南昌革命根据地爱国主义教育基地</view>
+              </view>
+
+              <view class='my-log'>
+                <view class='my-log-label'>日记:</view>
+                <view class='my-log-content'>今天走了3.2公里，这里好像是南昌，有点累呀。这里好像有好多好吃的，景点是：张家界，梧桐树</view>
+              </view>
+
+
+            </view>
+          </view>
+      </view>
+
+      <view class='item'>
+          <view class='left'>
+            <view class='date'>2018-10-1</view>
+          </view>
+          <view class='right'>
+            <view class='travel-log'>
+              <view class='travel-point'>
+                <view class='left-item'>
+                  <view>经度：120</view>
+                </view>
+                <view class='rightitem'>
+                  <view>维度：32</view>
+                </view>
+              </view>
+
+              <view class='step-number'>
+                <view class='travel-label'>行程:</view>
+                <view class='travel-number'>3.2公里</view>
+              </view>
+
+              <view class='address'>
+                <view class='address-label'>地点：</view>
+                <view class='address-content'>南昌革命根据地爱国主义教育基地</view>
+              </view>
+            </view>
+          </view>
+      </view>
+
+    </view>
+
+  </view>
+
+</view>
+
+<view class='post-container'>
+  <view class='post'>
+    <view>制定线路</view>
   </view>
 </view>

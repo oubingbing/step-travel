@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/compare_face/face",
+    "pages/index/index",
     "pages/logs/logs",
     "pages/map/map"
   ],
@@ -17,16 +17,16 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/compare_face/face",
-        "iconPath": "image/saylove.png",
-        "selectedIconPath": "image/select-saylove.png",
-        "text": "表白墙"
+        "pagePath": "pages/index/index",
+        "iconPath": "image/run.png",
+        "selectedIconPath": "image/select-run.png",
+        "text": "步数"
       },
       {
         "pagePath": "pages/map/map",
-        "iconPath": "image/select-saylove.png",
-        "selectedIconPath": "image/select-saylove.png",
-        "text": "卖舍友"
+        "iconPath": "image/travel.png",
+        "selectedIconPath": "image/select-travel.png",
+        "text": "旅行"
       }
     ]
   }

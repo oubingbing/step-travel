@@ -1,8 +1,184 @@
-.page-section-gap{
-  box-sizing: border-box;
-  padding: 0 30rpx;
+page{
+  padding: 0rpx;
 }
 
-.page-body-button {
-  margin-bottom: 30rpx;
+.page-body{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: -15rpx;
+}
+
+.page-section-gap{
+  box-sizing: border-box;
+  border-bottom-style:solid;
+  border-width:1rpx;
+  border-color: gainsboro;
+}
+
+
+/** 内容样式 **/
+.step-content .today-step{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right-style:solid;
+  border-width:1rpx;
+  border-color: darkgray;
+}
+
+.step-content .total-step{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-content .step{
+  font-size: 50rpx;
+}
+
+.content-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  align-items: center;
+  margin-top: 5rpx;
+}
+
+.content-container .content{
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-container .item{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.item .left{
+  width: 15%;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+  border-right-style:solid;
+  border-width:1rpx;
+  border-color: #66CDAA;
+  justify-content: flex-start;
+}
+
+
+.left .date{
+  position: absolute;
+  left: 38rpx;
+  background: #66CDAA;
+  color: white;
+  font-size: 25rpx;
+  padding-top: 5rpx;
+  padding-bottom: 5rpx;
+  padding-left: 15rpx;
+  padding-right: 15rpx;
+  border-radius: 10rpx;
+}
+
+.item .right{
+  width: 85%;
+  padding-left: 100rpx;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.right .travel-log{
+  width: 100%;
+  background: #E6E6E6;
+  display: flex;
+  flex-direction: column;
+  color: gray;
+  font-size: 35rpx;
+  border-radius: 15rpx;
+  padding-right: 5rpx;
+}
+
+.travel-log .travel-point{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 20rpx;
+  background: #66CDAA;
+  color: white;
+}
+
+.travel-log .step-number{
+  padding-top: 10rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 10rpx;
+}
+
+.step-number .travel-label{
+  width: 20%;
+}
+
+.step-number .travel-number{
+  width: 80%;
+}
+
+.travel-log .address{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 10rpx;
+}
+
+.address .address-label{
+  width: 20%;
+}
+
+.address .address-content{
+  width: 80%;
+}
+
+.my-log{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 10rpx;
+}
+
+.my-log .my-log-label{
+  width: 20%;
+}
+
+.my-log .my-log-content{
+  width: 80%;
+}
+
+/**post css**/
+
+.post-container{
+  position:fixed;
+  left:18rpx;
+  bottom:5rpx;
+  z-index:200;
+  width: 120prx;
+  height: 120prx;
+}
+
+.post {
+  display: flex;
+  flex-direction: row;
+  background: #FF6347;
+  color: white;
+  font-size: 30rpx;
+  padding: 10rpx;
+  border-radius: 5rpx;
+  background:rgba(255,69,0,0.7);
 }

@@ -1,0 +1,110 @@
+.container{
+  display: flex;
+  flex-direction: column;
+}
+
+.container .header{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  background: white;
+  padding-bottom: 50rpx;
+  padding-top: 50rpx;
+}
+
+.header .header-content{
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-content .step-content{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+/** 内容样式 **/
+.step-content .today-step{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right-style:solid;
+  border-width:1rpx;
+  border-color: darkgray;
+}
+
+.step-content .total-step{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-content .step{
+  font-size: 50rpx;
+}
+
+.content-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  align-items: center;
+  margin-top: 5rpx;
+}
+
+.content-container .content{
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-container .item{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.item .left{
+  width: 20%;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+  border-right-style:solid;
+  border-width:1rpx;
+  border-color: #66CDAA;
+  justify-content: center;
+}
+
+
+.left .date{
+  position: absolute;
+  left: 47rpx;
+  background: #66CDAA;
+  color: white;
+  font-size: 25rpx;
+  padding-top: 5rpx;
+  padding-bottom: 5rpx;
+  padding-left: 15rpx;
+  padding-right: 15rpx;
+  border-radius: 10rpx;
+}
+
+.item .right{
+  width: 80%;
+  padding-left: 200rpx;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.right .step-number{
+  font-size: 40rpx;
+  color: #66CDAA;
+}

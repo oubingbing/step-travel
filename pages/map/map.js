@@ -34,8 +34,8 @@ Page({
           longitude: 108.2045,
         }
       ],
-      color: "#FF0000DD",
-      width: 8,
+      color: "#66CDAA",
+      width: 3,
       dottedLine: false
     }],
   },
