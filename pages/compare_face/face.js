@@ -70,9 +70,6 @@ Page({
   },
 
   postRunData: function (encryptedData,iv,code){
-
-    return false;
-
     app.http('post', `/run_data`,
       {
         encrypted_data: encryptedData,

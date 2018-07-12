@@ -4,17 +4,18 @@ var qqmapsdk;
 
 Page({
   data: {
-    latitude: 23.099994,
-    longitude: 113.324520,
-    markers: [{
-      id: 1,
-      latitude: 23.099994,
-      longitude: 113.324520,
-      name: 'T.I.T 创意园'
-    }],
+    latitude: 26.2304,
+    longitude: 108.2045,
+    markers: [
+      {
+        longitude: 100,
+        latitude: 20
+      }
+    ],
     
     covers: [{
       latitude: 23.099994,
+      
       longitude: 113.344520,
       iconPath: '/image/location.png'
     }, {
@@ -23,44 +24,24 @@ Page({
       iconPath: '/image/location.png'
     }],
     polyline: [{
-      points: [{
-        longitude: 113.3245211,
-        latitude: 23.10229
-      },
+      points: [
         {
-          longitude: 103.324520,
-          latitude: 29.21229
+          longitude: 100,
+          latitude: 20
         },
-       {
-        longitude: 99.324520,
-        latitude: 36.21229
-      }],
+        {
+          latitude: 26.2304,
+          longitude: 108.2045,
+        }
+      ],
       color: "#FF0000DD",
       width: 8,
       dottedLine: false
-    },
-      {
-        points: [{
-          longitude: 113.3245211,
-          latitude: 23.10229
-        },
-        {
-          longitude: 108.58195102022,
-          latitude: 26.21229
-        },
-        {
-          longitude: 103.324520,
-          latitude: 29.21229
-        }],
-        color: "#66CDAA",
-        width: 2,
-        dottedLine: false
-      }
-    ],
+    }],
   },
   onLoad:function(){
     
-    let coords = [[23.104997, 114.428101], [22.543001, 114.071045]];// [[lat,lng]];
+    let coords = [[29.21229, 103.324520], [26.21229, 108.58195102022]];// [[lat,lng]];
     let lens = distance(coords);
     console.log(lens+'米'); //单位米
 
