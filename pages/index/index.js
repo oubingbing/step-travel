@@ -4,10 +4,25 @@ Page({
   data: {
     show_auth: app.globalData.show_auth,
     qrCode:'',
-    imageUrl: app.globalData.imageUrl
+    imageUrl: app.globalData.imageUrl,
+    statistic:'',
+    pageSize: 10,
+    pageNumber: 1,
+    initPageNumber: 1,
+    steps:[]
   },
 
   onLoad: function (option) {
+    let _this = this;
+    this.showAuth();
+    this.statistic();
+    this.steps(_this);
+  },
+
+  /**
+   * 判断是否应该显示授权按钮
+   */
+  showAuth:function(){
     let that = this;
     wx.getSetting({
       success(res) {
@@ -15,14 +30,21 @@ Page({
           that.setData({
             show_auth: true
           });
-        }else{
+        } else {
           //获取二维码
           that.getQrCode(that);
+          that.postRunData();
         }
       }
     })
+  },
 
-    wx.getSetting({ 
+  /**
+   * 登录获取微信步数
+   */
+  loginForRunData:function(){
+    let that = this;
+    wx.getSetting({
       success: (res) => {
         if (res.authSetting['scope.werun']) {
           wx.login({
@@ -40,11 +62,16 @@ Page({
               })
             }
           })
+        } else {
+          console.log('无权获得微信步数');
         }
       }
     })
   },
 
+  /**
+   * 收集用户步数
+   */
   postRunData: function (encryptedData,iv,code){
     app.http('post', `/run_data`,
       {
@@ -90,6 +117,50 @@ Page({
   },
 
   /**
+   * 获取统计的数据
+   */
+  statistic:function(){
+    let _this = this;
+    app.http('GET', '/run_statistic', {}, function (res) {
+      _this.setData({ statistic:res.data.data})
+    });
+  },
+
+  /**
+   * 获取步数列表
+   */
+  steps: function (_this) {
+    let order_by = 'run_at';
+    let sort_by = 'desc';
+    app.http(
+      'GET',
+       `/run_steps?page_size=${_this.data.pageSize}&page_number=${_this.data.pageNumber}&order_by=${order_by}&sort_by=${sort_by}
+       `,
+        {}, 
+        function (res) {
+          console.log(res.data.data);
+          if(res.data.error_code == 0){
+            let steps = _this.data.steps;
+            let stepData = res.data.data.page_data;
+            for (let step in stepData){
+              steps.push(stepData[step]);
+            }
+            _this.setData({
+              steps:steps,
+              pageNumber: _this.data.pageNumber + 1 
+            })
+          }
+    });
+  },
+  /**
+ * 上拉加载更多
+ */
+  onReachBottom: function () {
+    let _this = this;
+    this.steps(_this);
+  },
+
+  /**
    * 分享
    */
   onShareAppMessage: function (res) {
@@ -98,8 +169,8 @@ Page({
       console.log(res.target)
     }
     return {
-      title: '天呐，我跟你竟然是天生的情侣脸',
-      path: 'pages/compare_face/face',
+      title: '说走就走，让步数代你去旅行吧',
+      path: 'pages/index/index',
       imageUrl: '/image/compare_face.jpg',
       success: function (res) {
       },

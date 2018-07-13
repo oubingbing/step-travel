@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs",
-    "pages/map/map"
+    "pages/travel/travel",
+    "pages/create_travel/create_travel"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -23,7 +23,7 @@
         "text": "步数"
       },
       {
-        "pagePath": "pages/map/map",
+        "pagePath": "pages/travel/travel",
         "iconPath": "image/travel.png",
         "selectedIconPath": "image/select-travel.png",
         "text": "旅行"

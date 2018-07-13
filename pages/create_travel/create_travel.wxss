@@ -72,10 +72,9 @@ page{
   justify-content: flex-start;
 }
 
-
 .left .date{
   position: absolute;
-  left: 38rpx;
+  left: 62rpx;
   background: #66CDAA;
   color: white;
   font-size: 25rpx;
@@ -84,6 +83,10 @@ page{
   padding-left: 15rpx;
   padding-right: 15rpx;
   border-radius: 10rpx;
+}
+
+.left .travel-start{
+  background: red;
 }
 
 .item .right{
@@ -110,7 +113,7 @@ page{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 20rpx;
+  padding: 10rpx;
   background: #66CDAA;
   color: white;
 }
@@ -164,15 +167,14 @@ page{
 /**post css**/
 
 .post-container{
-  position:fixed;
-  left:18rpx;
-  bottom:5rpx;
-  z-index:200;
-  width: 120prx;
-  height: 120prx;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 15rpx;
 }
 
 .post {
+  width: 100%;
   display: flex;
   flex-direction: row;
   background: #FF6347;
@@ -180,5 +182,5 @@ page{
   font-size: 30rpx;
   padding: 10rpx;
   border-radius: 5rpx;
-  background:rgba(255,69,0,0.7);
+  justify-content: center;
 }

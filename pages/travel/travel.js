@@ -15,7 +15,6 @@ Page({
     
     covers: [{
       latitude: 23.099994,
-      
       longitude: 113.344520,
       iconPath: '/image/location.png'
     }, {
@@ -124,4 +123,9 @@ Page({
       }
     })
   },
+  createTravel:function(){
+    wx.navigateTo({
+      url: '/pages/create_travel/create_travel'
+    })
+  }
 })

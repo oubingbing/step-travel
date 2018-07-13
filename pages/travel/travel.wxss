@@ -1,29 +1,21 @@
-.container{
-  display: flex;
-  flex-direction: column;
+page{
+  padding: 0rpx;
 }
 
-.container .header{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  background: white;
-  padding-bottom: 50rpx;
-  padding-top: 50rpx;
-}
-
-.header .header-content{
-  width: 95%;
-  display: flex;
-  flex-direction: column;
-}
-
-.header-content .step-content{
+.page-body{
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  margin-top: -15rpx;
 }
+
+.page-section-gap{
+  box-sizing: border-box;
+  border-bottom-style:solid;
+  border-width:1rpx;
+  border-color: gainsboro;
+}
+
 
 /** 内容样式 **/
 .step-content .today-step{
@@ -69,7 +61,7 @@
 }
 
 .item .left{
-  width: 20%;
+  width: 15%;
   padding-top: 30rpx;
   padding-bottom: 30rpx;
   display: flex;
@@ -77,13 +69,13 @@
   border-right-style:solid;
   border-width:1rpx;
   border-color: #66CDAA;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 
 .left .date{
   position: absolute;
-  left: 47rpx;
+  left: 38rpx;
   background: #66CDAA;
   color: white;
   font-size: 25rpx;
@@ -95,51 +87,97 @@
 }
 
 .item .right{
-  width: 80%;
-  padding-left: 200rpx;
+  width: 85%;
+  padding-left: 100rpx;
   padding-top: 30rpx;
   padding-bottom: 30rpx;
   display: flex;
   flex-direction: row;
-  justify-content: center;
 }
 
-.right .step-number{
-  font-size: 40rpx;
-  color: #66CDAA;
-}
-
-/** 授权按钮 **/
-.auth-container{
-  position: fixed;
-  z-index: 200;
+.right .travel-log{
   width: 100%;
-  height: 100%;
-  background: gray;
+  background: #E6E6E6;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  background:rgba(2,2,2,0.8);
+  color: gray;
+  font-size: 35rpx;
+  border-radius: 15rpx;
+  padding-right: 5rpx;
 }
 
-.auth-button{
+.travel-log .travel-point{
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
+  padding: 20rpx;
   background: #66CDAA;
-  width: 50%;
   color: white;
-  font-size: 35rpx;
 }
 
-.auth-button .auth-image-container{
+.travel-log .step-number{
+  padding-top: 10rpx;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  padding: 10rpx;
 }
 
-.auth-button image{
-  width: 50rpx;
-  height: 50rpx;
-  margin-right: 10rpx;
+.step-number .travel-label{
+  width: 20%;
+}
+
+.step-number .travel-number{
+  width: 80%;
+}
+
+.travel-log .address{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 10rpx;
+}
+
+.address .address-label{
+  width: 20%;
+}
+
+.address .address-content{
+  width: 80%;
+}
+
+.my-log{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 10rpx;
+}
+
+.my-log .my-log-label{
+  width: 20%;
+}
+
+.my-log .my-log-content{
+  width: 80%;
+}
+
+/**post css**/
+
+.post-container{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 15rpx;
+}
+
+.post {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background: #FF6347;
+  color: white;
+  font-size: 30rpx;
+  padding: 10rpx;
+  border-radius: 5rpx;
+  justify-content: center;
 }

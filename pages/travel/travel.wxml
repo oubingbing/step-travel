@@ -18,6 +18,12 @@
 
     <view class='content'>
 
+    <view class='post-container' bindtap='createTravel'>
+      <view class='post'>
+        <view>制定旅行线路</view>
+      </view>
+    </view>
+
       <view class='item'>
           <view class='left'>
             <view class='date'>2018-10-1</view>
@@ -85,10 +91,4 @@
 
   </view>
 
-</view>
-
-<view class='post-container'>
-  <view class='post'>
-    <view>制定线路</view>
-  </view>
 </view>

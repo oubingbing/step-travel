@@ -6,11 +6,11 @@
       <view class='step-content'>
         <view class='today-step'>
           <view class='label'>今天</view>
-          <view class='step'>7300</view>
+          <view class='step'>{{statistic.today_step}}</view>
         </view>
         <view class='total-step'>
           <view class='label'>累计</view>
-          <view class='step'>100.45万步</view>
+          <view class='step'>{{statistic.total_step}}</view>
         </view>
       </view>
     </view>
@@ -20,38 +20,28 @@
   <view class='content-container'>
 
     <view class='content'>
-      <view class='item'>
+      <view class='item' wx:for="{{steps}}" wx:key="{{steps}}">
           <view class='left'>
-            <view class='date'>2018-10-1</view>
+            <view class='date'>{{item.run_at}}</view>
           </view>
           <view class='right'>
-            <view class='step-number'>9650</view>
-          </view>
-      </view>
-    </view>
-
-    <view class='content'>
-      <view class='item'>
-          <view class='left'>
-            <view class='date'>2018-10-1</view>
-          </view>
-          <view class='right'>
-            <view class='step-number'>9650</view>
-          </view>
-      </view>
-    </view>
-
-    <view class='content'>
-      <view class='item'>
-          <view class='left'>
-            <view class='date'>2018-10-1</view>
-          </view>
-          <view class='right'>
-            <view class='step-number'>9650</view>
+            <view class='step-number'>{{item.step}}</view>
           </view>
       </view>
     </view>
 
   </view>
+
+  <view wx:if="{{show_auth}}" class='auth-container'>
+  <view class='auth-wall'>
+    <button open-type="getUserInfo" 
+        bindgetuserinfo="getAuthUserInfo" 
+        class='auth-button'>
+      <view class='auth-image-container'><image src='/image/wx_log.png'></image></view>
+      <view>授权登录</view>
+    </button>
+  </view>
+  
+</view>
 
 </view>
