@@ -1,6 +1,5 @@
-var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
+
 const distance = require('../../utils/dist');
-var qqmapsdk;
 const app = getApp()
 
 Page({
@@ -45,33 +44,6 @@ Page({
   onReady: function (e) {
     this.mapCtx = wx.createMapContext('myMap')
 
-  },
-  test: function (res) {
-    //微信小程序地图SDK
-    qqmapsdk = new QQMapWX({
-      key: 'XCDBZ-EG7C6-2OIS6-MSJDG-OQ2FT-2EBED'
-    });
-
-    qqmapsdk.calculateDistance({
-      mode: 'driving',
-      to: [{
-        latitude: 22.511,
-        longitude: 113.9424
-      }],
-      success: function (res) {
-        console.log(res);
-      },
-      fail: function (res) {
-        console.log(res);
-      },
-      complete: function (res) {
-        console.log(res);
-      }
-    });
-  },
-
-  moveToLocation: function () {
-    this.mapCtx.moveToLocation()
   },
   /**
    * 选择旅行站点
@@ -141,6 +113,9 @@ Page({
     })
   },
 
+  /**
+   * 计算距离
+   */
   sumDistance:function(){
     let plans = this.data.plans;
     let len = plans.length;
@@ -163,8 +138,17 @@ Page({
         distance: dist,
         plans: plans
       }, res => {
-
         console.log(res);
+        if(res.data.error_code == 0){
+          app.newTravelPlan = true;
+          wx.showLoading({
+            title: '新建成功！',
+          });
+          setTimeout(function(){
+            wx.hideLoading();
+            wx.navigateBack({ comeBack: true });
+          },1000)
+        }
 
       });
     

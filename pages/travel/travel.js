@@ -13,14 +13,14 @@ Page({
       points: [],
       color: "#FF4500",
       width: 3,
-      dottedLine: true,
-      arrowLine:true,
-      planId:''
+      dottedLine: false
     }],
     logs:[],
     pageSize: 4,
     pageNumber: 1,
     initPageNumber: 1,
+    plan:'',
+    showPostPlan:false
   },
   onLoad:function(){
     this.plan();
@@ -29,10 +29,34 @@ Page({
     });
   },
   onReady: function (e) {
-    
     this.travelLogs();
   },
+  onShow:function(){
+    if (app.newTravelPlan == true){
+      this.plan();
+      this.travelLogs();
+      this.setData({
+        includePoints: [],
+        markers: [],
+        polyline: [{
+          points: [],
+          color: "#FF4500",
+          width: 3,
+          dottedLine: false
+        }],
+        logs: [],
+        pageSize: 4,
+        pageNumber: 1,
+        initPageNumber: 1,
+        plan: '',
+        showPostPlan: false
+      })
+    }
+  },
 
+  /**
+   * 保存周边咨询
+   */
   savePoi:function(logId,title,address,poiType){
     app.http('post', `/create_poi`,
       {
@@ -41,9 +65,7 @@ Page({
         type:poiType,
         log_id:logId
       }, res => {
-
         console.log(res);
-
       });
   },
 
@@ -51,11 +73,18 @@ Page({
    * 获取计划
    */
   plan:function(){
+    console.log('plan');
     let _this = this;
     app.http('get', `/plan`,{}, res => {
 
         console.log(res.data.data);
         let resData = res.data.data;
+        if(resData == ''){
+          _this.setData({
+            showPostPlan:true
+          })
+        }
+
         if(res.data.error_code == 0){
           let markers = _this.data.markers;
           let polyline = _this.data.polyline;
@@ -69,6 +98,7 @@ Page({
           })
 
           let travelLogs = resData.travel_logs;
+          let finishPoint = [];
           travelLogs.map((item,key)=>{
             //标记坐标点
             markers.push({
@@ -78,15 +108,25 @@ Page({
               width: 50,
               height: 50
             });
+            finishPoint.push({
+              latitude: item.latitude,
+              longitude: item.longitude,
+            });
           })
+
+          let finishPolyline = {
+            points: finishPoint,
+            color: "#FF4500",
+            width: 3,
+            dottedLine: true,
+            arrowLine: true
+          };
+          polyline.push(finishPolyline)
 
           //缩放地图
           let includePoints = _this.data.includePoints;
-          includePoints.push({ longitude: 113.93694, latitude: 22.5326 })
-          includePoints.push({ 
-            longitude: 114.029246, 
-            latitude: 22.609562
-          })
+          //includePoints.push({ longitude: travelLogs[0].longitude, latitude: travelLogs[0].latitude })
+          includePoints.push({ longitude: travelLogs[travelLogs.length - 1].longitude, latitude: travelLogs[travelLogs.length - 1].latitude})
 
           //画线
           polyline[0].points = points;
@@ -96,7 +136,8 @@ Page({
             longitude: planPoints[0].longitude,
             includePoints: includePoints,
             markers: markers,
-            planId:resData.id
+            planId:resData.id,
+            plan: resData
           })
         }
       });
@@ -119,7 +160,8 @@ Page({
             logs.push(item);
           })
           _this.setData({
-            logs: logs
+            logs: logs,
+            pageNumber: _this.data.pageNumber + 1 
           })
          _this.exchangeLocation(_this,logData);
           _this.getPoi(_this, logData);
@@ -166,6 +208,9 @@ Page({
     })
   },
 
+  /**
+   * 更新日志的地理信息
+   */
   updateLog:function(logId,name,address){
     app.http('put', `/update_log`,
       {
@@ -184,7 +229,7 @@ Page({
    */
   getPoi:function(_this,logs){
     logs.map(item=>{
-      if(item.hotel == ''){
+      if(item.hotel == null){
         _this.getPoiHotel(_this, item.id, item.latitude, item.longitude);
       }
       if (item.foods == ''){
@@ -313,5 +358,13 @@ Page({
     wx.navigateTo({
       url: '/pages/create_travel/create_travel'
     })
-  }
+  },
+
+  /**
+   * 上拉加载更多
+   */
+  onReachBottom: function () {
+    let _this = this;
+    this.travelLogs();
+  },
 })

@@ -1,5 +1,16 @@
 <view class='container'>
 
+  <view class='user-container'>
+    <view class='user-info' wx:if="{{user != ''}}">
+      <view class='user'>
+        <image class='user-image' src='{{user.avatar}}'></image>
+      </view>
+      <view class='step-log'>
+        <view>旅行记录</view>
+      </view>
+    </view>
+  </view>
+
   <!-- 头部 -->
   <view class='header'>
     <view class='header-content'>

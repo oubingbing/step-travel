@@ -18,9 +18,15 @@
 
     <view class='content'>
 
-    <view class='post-container' bindtap='createTravel'>
+    <view class='post-container' bindtap='createTravel' wx:if="{{showPostPlan}}">
       <view class='post'>
         <view>制定旅行线路</view>
+      </view>
+    </view>
+
+    <view class='post-container' bindtap='createTravel' wx:if="{{!showPostPlan}}">
+      <view class='post'>
+        <view>重新制定旅行线路</view>
       </view>
     </view>
 

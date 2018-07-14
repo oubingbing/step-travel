@@ -5,12 +5,14 @@ App({
     this.globalData.appKey = 'rEpRe1iuBg4q1KGB';
 
     //设置基本接口全局变量
-    //this.globalData.apiUrl = 'https://lianyan.kucaroom.com/api/wechat';
-    this.globalData.apiUrl = 'http://localhost:8000/api/wechat';
+    this.globalData.apiUrl = 'https://lianyan.kucaroom.com/api/wechat';
+    //this.globalData.apiUrl = 'http://localhost:8000/api/wechat';
   
     //七牛图片外链域名
     this.globalData.imageUrl = 'http://image.kucaroom.com/';
     this.globalData.bgIimage = this.globalData.imageUrl+'30269a739a66831daa31ec93d28318af.jpg';
+
+    this.newTravelPlan = false;
 
     let token = wx.getStorageSync('token');
     if (!token) {
@@ -137,6 +139,7 @@ App({
     apiUrl: null,
     color: '0aecc3',
     imageUrl:'',
-    bgImage:''
+    bgImage:'',
+    newTravelPlan:false
   }
 })
