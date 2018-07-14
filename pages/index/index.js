@@ -5,7 +5,8 @@ Page({
     show_auth: app.globalData.show_auth,
     qrCode:'',
     imageUrl: app.globalData.imageUrl,
-    statistic:'',
+    todayStep:0,
+    totalStep:0,
     pageSize: 10,
     pageNumber: 1,
     initPageNumber: 1,
@@ -17,6 +18,7 @@ Page({
     this.showAuth();
     this.statistic();
     this.steps(_this);
+    //this.loginForRunData();
   },
 
   /**
@@ -33,7 +35,7 @@ Page({
         } else {
           //获取二维码
           that.getQrCode(that);
-          that.postRunData();
+          that.loginForRunData();
         }
       }
     })
@@ -122,7 +124,12 @@ Page({
   statistic:function(){
     let _this = this;
     app.http('GET', '/run_statistic', {}, function (res) {
-      _this.setData({ statistic:res.data.data})
+      let todayStep = res.data.data.today_step != null ? res.data.data.today_step:0;
+      let totalStep = res.data.data.total_step != null ? res.data.data.total_step:0;
+      _this.setData({ 
+        todayStep: todayStep,
+        totalStep: totalStep
+        })
     });
   },
 

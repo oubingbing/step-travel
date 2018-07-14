@@ -7,8 +7,8 @@
       latitude="{{latitude}}"
       longitude="{{longitude}}"
       markers="{{markers}}"
-      covers="{{covers}}"
       polyline="{{polyline}}"
+      include-points="{{includePoints}}"
       show-location
     ></map>
   </view>
@@ -24,65 +24,58 @@
       </view>
     </view>
 
-      <view class='item'>
+      <view class='item' wx:for="{{logs}}" wx:key="{{logs}}">
           <view class='left'>
-            <view class='date'>2018-10-1</view>
+            <view class='date'>{{item.run_at}}</view>
           </view>
           <view class='right'>
             <view class='travel-log'>
               <view class='travel-point'>
                 <view class='left-item'>
-                  <view>经度：120</view>
+                  <view>经度:{{item.format_latitude}}</view>
                 </view>
                 <view class='rightitem'>
-                  <view>维度：32</view>
+                  <view>纬度:{{item.format_longitude}}</view>
                 </view>
               </view>
 
               <view class='step-number'>
                 <view class='travel-label'>行程:</view>
-                <view class='travel-number'>3.2公里</view>
+                <view class='travel-number'>{{item.distance}}公里</view>
               </view>
 
               <view class='address'>
                 <view class='address-label'>地点：</view>
-                <view class='address-content'>南昌革命根据地爱国主义教育基地</view>
+                <view class='address-content'>{{item.name}}</view>
               </view>
 
               <view class='my-log'>
                 <view class='my-log-label'>日记:</view>
-                <view class='my-log-content'>今天走了3.2公里，这里好像是南昌，有点累呀。这里好像有好多好吃的，景点是：张家界，梧桐树</view>
-              </view>
-
-
-            </view>
-          </view>
-      </view>
-
-      <view class='item'>
-          <view class='left'>
-            <view class='date'>2018-10-1</view>
-          </view>
-          <view class='right'>
-            <view class='travel-log'>
-              <view class='travel-point'>
-                <view class='left-item'>
-                  <view>经度：120</view>
+                <view class='my-log-content'>
+                  今天走了{{item.distance}}，我来到了{{item.name}}，走得有点累呀，我住在{{item.hotel}}。
+                  <view class='foods'>
+                    <view>我吃了好多好吃，这些都是我下的馆子。</view>
+                    <view class='food-wall'>
+                      <view wx:for="{{item.foods}}" 
+                            wx:key="{{item.foods}}" 
+                            wx:for-item="food">
+                        {{food.title}}
+                      </view>
+                    </view>
+                  </view>
+                  <view class='views'>
+                    <view>这几个地方我都去了，哈哈。</view>
+                    <view class='views-wall'>
+                      <view wx:for="{{item.views}}" 
+                            wx:key="{{item.views}}" 
+                            wx:for-item="food">
+                            {{food.title}}
+                      </view>
+                    </view>
+                  </view>
                 </view>
-                <view class='rightitem'>
-                  <view>维度：32</view>
-                </view>
               </view>
 
-              <view class='step-number'>
-                <view class='travel-label'>行程:</view>
-                <view class='travel-number'>3.2公里</view>
-              </view>
-
-              <view class='address'>
-                <view class='address-label'>地点：</view>
-                <view class='address-content'>南昌革命根据地爱国主义教育基地</view>
-              </view>
             </view>
           </view>
       </view>

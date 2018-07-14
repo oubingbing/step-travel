@@ -6,11 +6,11 @@
       <view class='step-content'>
         <view class='today-step'>
           <view class='label'>今天</view>
-          <view class='step'>{{statistic.today_step}}</view>
+          <view class='step'>{{todayStep}}</view>
         </view>
         <view class='total-step'>
           <view class='label'>累计</view>
-          <view class='step'>{{statistic.total_step}}</view>
+          <view class='step'>{{totalStep}}</view>
         </view>
       </view>
     </view>

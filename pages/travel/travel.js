@@ -1,128 +1,264 @@
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
 const distance = require('../../utils/dist');
+const app = getApp()
 var qqmapsdk;
 
 Page({
   data: {
-    latitude: 26.2304,
-    longitude: 108.2045,
-    markers: [
-      {
-        longitude: 100,
-        latitude: 20
-      }
-    ],
-    
-    covers: [{
-      latitude: 23.099994,
-      longitude: 113.344520,
-      iconPath: '/image/location.png'
-    }, {
-      latitude: 23.099994,
-      longitude: 113.304520,
-      iconPath: '/image/location.png'
-    }],
+    latitude: 0,
+    longitude: 0,
+    includePoints: [],
+    markers: [],
     polyline: [{
-      points: [
-        {
-          longitude: 100,
-          latitude: 20
-        },
-        {
-          latitude: 26.2304,
-          longitude: 108.2045,
-        }
-      ],
-      color: "#66CDAA",
+      points: [],
+      color: "#FF4500",
       width: 3,
-      dottedLine: false
+      dottedLine: true,
+      arrowLine:true
     }],
+    logs:[],
+    pageSize: 4,
+    pageNumber: 1,
+    initPageNumber: 1,
   },
   onLoad:function(){
-    
-    let coords = [[29.21229, 103.324520], [26.21229, 108.58195102022]];// [[lat,lng]];
-    let lens = distance(coords);
-    console.log(lens+'米'); //单位米
-
-  },
-  onReady: function (e) {
-    this.mapCtx = wx.createMapContext('myMap')
-
-  },
-  test: function (res) {
-    //微信小程序地图SDK
+    this.plan();
     qqmapsdk = new QQMapWX({
       key: 'XCDBZ-EG7C6-2OIS6-MSJDG-OQ2FT-2EBED'
     });
+  },
+  onReady: function (e) {
+    
+    this.travelLogs();
+  },
 
-    qqmapsdk.calculateDistance({
-      mode: 'driving',
-      to: [{
-        latitude: 22.511,
-        longitude: 113.9424
-      }],
+  /**
+   * 获取计划
+   */
+  plan:function(){
+    let _this = this;
+    app.http('get', `/plan`,{}, res => {
+
+        console.log(res.data.data);
+        let resData = res.data.data;
+        if(res.data.error_code == 0){
+          let markers = _this.data.markers;
+          let polyline = _this.data.polyline;
+          let points = polyline[0].points;
+          let planPoints = resData.points;
+          planPoints.map(item=>{
+            points.push({
+              longitude: item.longitude,
+              latitude: item.latitude
+            });
+          })
+
+          let travelLogs = resData.travel_logs;
+          travelLogs.map((item,key)=>{
+            //标记坐标点
+            markers.push({
+              id: key,
+              latitude: item.latitude,
+              longitude: item.longitude,
+              width: 50,
+              height: 50
+            });
+          })
+
+          //缩放地图
+          let includePoints = _this.data.includePoints;
+          includePoints.push({ longitude: 113.93694, latitude: 22.5326 })
+          includePoints.push({ 
+            longitude: 114.029246, 
+            latitude: 22.609562
+          })
+
+          //画线
+          polyline[0].points = points;
+          _this.setData({
+            polyline: polyline,
+            latitude: planPoints[0].latitude,
+            longitude: planPoints[0].longitude,
+            includePoints: includePoints,
+            markers: markers
+          })
+        }
+      });
+
+  },
+
+  /**
+   * 获取旅行日志
+   */
+  travelLogs:function(){
+
+
+    let _this = this;
+    app.http('GET',`/ravel_logs?page_size=${_this.data.pageSize}&page_number=${_this.data.pageNumber}`,
+      {},
+      function (res) {
+        console.log(res.data.data.page_data);
+        let logData = res.data.data.page_data;
+        if(logData != null){
+          let logs = _this.data.logs;
+          logData.map(item=>{
+            logs.push(item);
+          })
+          _this.setData({
+            logs: logs
+          })
+         _this.exchangeLocation(_this,logData);
+          _this.getPoi(_this, logData);
+        }
+      });
+  },
+
+  exchangeLocation: function (_this,logs){
+
+    logs.map(item => {
+      if (item.name == ''){
+        qqmapsdk.reverseGeocoder({
+          location: {
+            latitude: item.latitude,
+            longitude: item.longitude
+          },
+          success: function (res) {
+            console.log(res);
+            if (res.status == 0) {
+              let name = res.result.formatted_addresses.recommend
+              let address = res.result.address
+              let theLogs = _this.data.logs;
+              let newLogs = theLogs.map(sub_item => {
+                if (sub_item.id == item.id) {
+                  sub_item.name = name;
+                  sub_item.address = address;
+                }
+                return sub_item;
+              })
+              console.log('new logs' + newLogs);
+              _this.setData({
+                logs: newLogs
+              })
+            }
+          },
+          fail: function (res) {
+            console.log(res);
+          }
+        });
+      }
+    })
+  },
+
+  getPoi:function(_this,logs){
+    logs.map(item=>{
+      if(item.hotel == ''){
+        _this.getPoiHotel(_this, item.id, item.latitude, item.longitude);
+      }
+      if (item.foods == ''){
+        _this.getPoiFood(_this, item.id, item.latitude, item.longitude);
+      }
+      if(item.views == ''){
+        _this.getPoiView(_this, item.id, item.latitude, item.longitude);
+      }
+    })
+  },
+
+  getPoiHotel: function (_this,id, latitude, longitude){
+    qqmapsdk.search({
+      keyword: "酒店",
+      page_size: 1,
+      location: {
+        latitude: latitude,
+        longitude: longitude
+      },
       success: function (res) {
         console.log(res);
+        if (res.status == 0) {
+          let hotel = res.data[0].title
+          let theLogs = _this.data.logs;
+          let newLogs = theLogs.map(sub_item => {
+            if (sub_item.id == id) {
+              sub_item.hotel = hotel;
+            }
+            return sub_item;
+          })
+          console.log('new logs' + newLogs);
+          _this.setData({
+            logs: newLogs
+          })
+        }
       },
       fail: function (res) {
-        console.log(res);
-      },
-      complete: function (res) {
         console.log(res);
       }
     });
   },
-  getCenterLocation: function () {
-    this.mapCtx.getCenterLocation({
+
+  getPoiFood: function (_this, id, latitude, longitude) {
+    qqmapsdk.search({
+      keyword: "美食",
+      page_size: 5,
+      location: {
+        latitude: latitude,
+        longitude: longitude
+      },
       success: function (res) {
-        console.log(res.longitude)
-        console.log(res.latitude)
-      }
-    })
-  },
-  moveToLocation: function () {
-    this.mapCtx.moveToLocation()
-  },
-  translateMarker: function () {
-    this.mapCtx.translateMarker({
-      markerId: 1,
-      autoRotate: true,
-      duration: 1000,
-      destination: {
-        latitude: 23.10229,
-        longitude: 113.3345211,
+        console.log(res);
+        if (res.status == 0) {
+          let foods = res.data;
+          let theLogs = _this.data.logs;
+          let newLogs = theLogs.map(sub_item => {
+            if (sub_item.id == id) {
+              sub_item.foods = foods;
+            }
+            return sub_item;
+          })
+          console.log('new logs' + newLogs);
+          _this.setData({
+            logs: newLogs
+          })
+        }
       },
-      animationEnd() {
-        console.log('animation end')
-      }
-    })
-  },
-  includePoints: function () {
-    this.mapCtx.includePoints({
-      padding: [10],
-      points: [{
-        latitude: 23.10229,
-        longitude: 113.3345211,
-      }, {
-        latitude: 23.00229,
-        longitude: 113.3345211,
-      }]
-    })
-  },
-  chooseLocation: function () {
-    wx.chooseLocation({
-      success: function (res) {
-        console.log(res.name);
-        //选择地点之后返回到原来页面
-      },
-      fail: function (err) {
-        console.log(err)
-      },
-      complete: function (res) {
+      fail: function (res) {
         console.log(res);
       }
-    })
+    });
   },
+
+  getPoiView: function (_this, id, latitude, longitude) {
+    qqmapsdk.search({
+      keyword: "景点",
+      page_size: 5,
+      location: {
+        latitude: latitude,
+        longitude: longitude
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.status == 0) {
+          let views = res.data;
+          let theLogs = _this.data.logs;
+          let newLogs = theLogs.map(sub_item => {
+            if (sub_item.id == id) {
+              sub_item.views = views;
+            }
+            return sub_item;
+          })
+          console.log('new logs' + newLogs);
+          _this.setData({
+            logs: newLogs
+          })
+        }
+      },
+      fail: function (res) {
+        console.log(res);
+      }
+    });
+  },
+
+  /**
+   * 新建旅程
+   */
   createTravel:function(){
     wx.navigateTo({
       url: '/pages/create_travel/create_travel'

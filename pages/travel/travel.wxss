@@ -75,7 +75,7 @@ page{
 
 .left .date{
   position: absolute;
-  left: 38rpx;
+  left: 35rpx;
   background: #66CDAA;
   color: white;
   font-size: 25rpx;
@@ -113,6 +113,7 @@ page{
   padding: 20rpx;
   background: #66CDAA;
   color: white;
+  font-size: 30rpx;
 }
 
 .travel-log .step-number{
@@ -120,7 +121,7 @@ page{
   width: 100%;
   display: flex;
   flex-direction: row;
-  padding: 10rpx;
+  font-size: 30rpx;
 }
 
 .step-number .travel-label{
@@ -135,22 +136,26 @@ page{
   width: 100%;
   display: flex;
   flex-direction: row;
-  padding: 10rpx;
+  font-size: 30rpx;
 }
 
 .address .address-label{
-  width: 20%;
+  width: 22%;
+  display: flex;
+  flex-direction: row;
 }
 
 .address .address-content{
-  width: 80%;
+  width: 78%;
+  display: flex;
+  flex-direction: row;
 }
 
 .my-log{
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 10rpx;
+  font-size: 30rpx;
 }
 
 .my-log .my-log-label{
@@ -159,6 +164,35 @@ page{
 
 .my-log .my-log-content{
   width: 80%;
+}
+
+.my-log-content .foods{
+  display: flex;
+  flex-direction:column;
+  width: 100%;
+  margin-top: 10rpx;
+}
+
+.foods .food-wall{
+  width: 90%;
+  background: white;
+  padding: 10rpx;
+  border-radius: 10rpx;
+}
+
+.my-log-content .views{
+  display: flex;
+  flex-direction:column;
+  width: 100%;
+  margin-top: 10rpx;
+}
+
+.views .views-wall{
+  width: 90%;
+  background: white;
+  padding: 10rpx;
+  border-radius: 10rpx;
+  margin-bottom: 10rpx;
 }
 
 /**post css**/
