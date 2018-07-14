@@ -14,7 +14,8 @@ Page({
       color: "#FF4500",
       width: 3,
       dottedLine: true,
-      arrowLine:true
+      arrowLine:true,
+      planId:''
     }],
     logs:[],
     pageSize: 4,
@@ -30,6 +31,20 @@ Page({
   onReady: function (e) {
     
     this.travelLogs();
+  },
+
+  savePoi:function(logId,title,address,poiType){
+    app.http('post', `/create_poi`,
+      {
+        title: title,
+        address: address,
+        type:poiType,
+        log_id:logId
+      }, res => {
+
+        console.log(res);
+
+      });
   },
 
   /**
@@ -80,7 +95,8 @@ Page({
             latitude: planPoints[0].latitude,
             longitude: planPoints[0].longitude,
             includePoints: includePoints,
-            markers: markers
+            markers: markers,
+            planId:resData.id
           })
         }
       });
@@ -91,8 +107,6 @@ Page({
    * 获取旅行日志
    */
   travelLogs:function(){
-
-
     let _this = this;
     app.http('GET',`/ravel_logs?page_size=${_this.data.pageSize}&page_number=${_this.data.pageNumber}`,
       {},
@@ -113,8 +127,10 @@ Page({
       });
   },
 
+  /**
+   * 获取地理名字
+   */
   exchangeLocation: function (_this,logs){
-
     logs.map(item => {
       if (item.name == ''){
         qqmapsdk.reverseGeocoder({
@@ -139,6 +155,7 @@ Page({
               _this.setData({
                 logs: newLogs
               })
+              _this.updateLog(item.id, name, address);
             }
           },
           fail: function (res) {
@@ -149,6 +166,22 @@ Page({
     })
   },
 
+  updateLog:function(logId,name,address){
+    app.http('put', `/update_log`,
+      {
+        name: name,
+        address: address,
+        log_id: logId
+      }, res => {
+
+        console.log(res);
+
+      });
+  },
+
+  /**
+   * 获取附近的咨询
+   */
   getPoi:function(_this,logs){
     logs.map(item=>{
       if(item.hotel == ''){
@@ -163,6 +196,9 @@ Page({
     })
   },
 
+  /**
+   * 获取酒店信息
+   */
   getPoiHotel: function (_this,id, latitude, longitude){
     qqmapsdk.search({
       keyword: "酒店",
@@ -186,6 +222,7 @@ Page({
           _this.setData({
             logs: newLogs
           })
+          _this.savePoi(id, hotel, res.data[0].address, 1)
         }
       },
       fail: function (res) {
@@ -194,6 +231,9 @@ Page({
     });
   },
 
+  /**
+   * 获取美食
+   */
   getPoiFood: function (_this, id, latitude, longitude) {
     qqmapsdk.search({
       keyword: "美食",
@@ -217,6 +257,10 @@ Page({
           _this.setData({
             logs: newLogs
           })
+
+          foods.map(item=>{
+            _this.savePoi(id, item.title, item.address, 2)
+          })
         }
       },
       fail: function (res) {
@@ -225,6 +269,9 @@ Page({
     });
   },
 
+  /**
+   * 获取景点
+   */
   getPoiView: function (_this, id, latitude, longitude) {
     qqmapsdk.search({
       keyword: "景点",
@@ -247,6 +294,9 @@ Page({
           console.log('new logs' + newLogs);
           _this.setData({
             logs: newLogs
+          })
+          views.map(item=>{
+            _this.savePoi(id, item.title, item.address,3)
           })
         }
       },
