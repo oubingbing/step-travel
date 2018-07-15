@@ -1,6 +1,6 @@
 
 <view class="page-body">
-  <view class="page-section page-section-gap">
+  <view class="page-section page-section-gap" wx:if="{{showMap}}">
     <map
       id="myMap"
       style="width: 100%; height: 300px;"
@@ -10,11 +10,12 @@
       polyline="{{polyline}}"
       include-points="{{includePoints}}"
       show-location
+      wx:if="{{showMap}}"
     ></map>
   </view>
 
     <!-- 具体步数内容 -->
-  <view class='content-container'>
+  <view wx:if="{{showMap}}" class='content-container'>
 
     <view class='content'>
 
@@ -24,9 +25,13 @@
       </view>
     </view>
 
-    <view class='post-container' bindtap='createTravel' wx:if="{{!showPostPlan}}">
-      <view class='post'>
-        <view>重新制定旅行线路</view>
+    <view class='icon-container' wx:if="{{!showPostPlan}}">
+      <view class='icon'>
+        <image src='/image/restart.png' bindtap='createTravel'></image>
+        <image src='/image/show-label.png'></image>
+        <image src='/image/report.png' bindtap='drawReport'></image>
+        <image src='/image/not-location.png'></image>
+        <image src='/image/all-view.png'></image>
       </view>
     </view>
 
@@ -38,10 +43,10 @@
             <view class='travel-log'>
               <view class='travel-point'>
                 <view class='left-item'>
-                  <view>经度:{{item.format_latitude}}</view>
+                  <view>东度:{{item.format_latitude}}</view>
                 </view>
                 <view class='rightitem'>
-                  <view>纬度:{{item.format_longitude}}</view>
+                  <view>北度:{{item.format_longitude}}</view>
                 </view>
               </view>
 
@@ -59,7 +64,7 @@
                 <view class='my-log-label'>日记:</view>
                 <view class='my-log-content'>
                   今天走了{{item.distance}}公里，我来到了{{item.name}}，走得有点累呀，我住在{{item.hotel}}。
-                  <view class='foods'>
+                  <view class='foods' wx:if="{{item.foods != ''}}">
                     <view>我吃了好多好吃，这些都是我下的馆子。</view>
                     <view class='food-wall'>
                       <view wx:for="{{item.foods}}" 
@@ -69,7 +74,7 @@
                       </view>
                     </view>
                   </view>
-                  <view class='views'>
+                  <view class='views' wx:if="{{item.views != ''}}">
                     <view>这几个地方我都去了，哈哈。</view>
                     <view class='views-wall'>
                       <view wx:for="{{item.views}}" 
@@ -90,4 +95,11 @@
 
   </view>
 
+
+  <view class='canvas-container' wx:if="{{showReport}}">
+    <canvas class='convas' canvas-id="myCanvas" bindlongtap='saveReport' bindtap='hideReport' style="border:none" wx:if="{{showReport}}"/>
+    <view class='long-tap-tip'>长按图片保存</view>
+  </view>
+
 </view>
+

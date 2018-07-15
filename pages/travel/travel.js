@@ -20,21 +20,28 @@ Page({
     pageNumber: 1,
     initPageNumber: 1,
     plan:'',
-    showPostPlan:false
+    showPostPlan:false,
+    avatar:'',
+    showReport:false,
+    showMap:true
   },
   onLoad:function(){
     this.plan();
     qqmapsdk = new QQMapWX({
       key: 'XCDBZ-EG7C6-2OIS6-MSJDG-OQ2FT-2EBED'
     });
+
   },
   onReady: function (e) {
     this.travelLogs();
+
+    this.downLoadAvatar();
   },
   onShow:function(){
     if (app.newTravelPlan == true){
       this.plan();
       this.travelLogs();
+      app.newTravelPlan = false;
       this.setData({
         includePoints: [],
         markers: [],
@@ -52,6 +59,134 @@ Page({
         showPostPlan: false
       })
     }
+  },
+
+  /**
+   * 下载用户头像
+   */
+  downLoadAvatar:function(){
+    let avatar = wx.getStorageSync('avatar');
+    let _this = this;
+    console.log(avatar);
+    let avatarImage = wx.getStorageSync('avatar');
+    if (avatarImage == ''){
+      wx.downloadFile({
+        url: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKWJ8B1DG0aIN3LVa6GEuo3Hgf1eIj8coyPY4wZyrJ3NMZBWhUNefdxJ0iamZDvJxBUQsicV3mwSN6Q/132',
+        success: function (res) {
+          if (res.statusCode === 200) {
+            wx.playVoice({
+              filePath: res.tempFilePath
+            })
+            console.log(res);
+            _this.setData({
+              avatar: res.tempFilePath
+            })
+            wx.setStorageSync('avatar', res.tempFilePath);
+          }
+        }
+      })
+    }else{
+      _this.setData({
+        avatar: avatarImage
+      })
+    }
+  },
+
+  /**
+   * 隐藏报告
+   */
+  hideReport:function(){
+    console.log('隐藏');
+    this.setData({
+      showReport: false,
+      showMap:true
+    })
+  },
+
+  /**
+   * 绘制报告
+   */
+  drawReport:function(){
+
+      this.setData({
+        showReport:true,
+        showMap:false
+      })
+      let avatarImage = wx.getStorageSync('avatar');
+      console.log(wx.getSystemInfoSync().windowWidth);
+      let windowWidth = (wx.getSystemInfoSync().windowWidth - 35);
+      let windowHeight = wx.getSystemInfoSync().windowHeight;
+      let avatar = this.data.avatar;
+
+      console.log('头像：'+avatar);
+      console.log(wx.getSystemInfoSync());
+      console.log('高度：' + windowHeight);
+      const ctx = wx.createCanvasContext('myCanvas')
+
+      //ctx.setStrokeStyle('red')
+      //ctx.moveTo(windowWidth / 2, 20)
+      //ctx.lineTo(windowWidth / 2, 170)
+      //ctx.stroke()
+
+      ctx.drawImage('/image/bg-report.jpg', 0, 0, (windowWidth / 1), (windowHeight - (windowHeight / 8)));
+
+      ctx.setFontSize(15)
+      ctx.setFillStyle('#FFFFFF')
+      ctx.setTextAlign('left')
+      ctx.fillText('叶子', (windowWidth / 2), 80)
+      ctx.fillText('旅行中', (windowWidth / 2), 100)
+
+      ctx.setTextAlign('center')
+      ctx.fillText('步数旅行者', windowWidth / 2, 30)
+      ctx.fillText('深圳北站', windowWidth / 2, 155)
+      ctx.drawImage('/image/jiantou.png', (windowWidth / 2) - (windowWidth / 30), 160, 20, 20);
+      ctx.fillText('北京天安门', windowWidth / 2, 195)
+      ctx.fillText('旅行了5个省，30座城市', windowWidth / 2, 240)
+      ctx.fillText('住了50个酒店', windowWidth / 2, 270)
+      ctx.fillText('游玩了100个景点', windowWidth / 2, 300)
+      ctx.fillText('下了90次馆子', windowWidth / 2, 330)
+      ctx.fillText('里程：400公里', (windowWidth / 2) - 70, 360)
+      ctx.fillText('步数：20000', (windowWidth / 2)+70, 360)
+      ctx.save();
+      ctx.setFillStyle('#CD2626')
+      ctx.drawImage('/image/qrcode.jpg', (windowWidth / 2) + (windowWidth / 4), (windowHeight - (windowHeight/4)), 60, 60)
+      ctx.drawImage(avatarImage, (windowWidth / 2) - 70, 55, 60, 60)
+      ctx.draw();
+      
+
+  },
+
+  /**
+   * 保存报告
+   */
+  saveReport:function(){
+    wx.authorize({
+      scope: "scope.writePhotosAlbum", success(res) {
+        console.log('授权获得微信运动数据');
+        wx.canvasToTempFilePath({
+          canvasId: 'myCanvas',
+          success: function success(res) {
+            console.log(res.tempFilePath)
+            let image = res.tempFilePath;
+            wx.saveImageToPhotosAlbum({
+              filePath: image,
+              success(res) {
+                console.log(res)
+                wx.showLoading({
+                  title: '保存成功！',
+                });
+                setTimeout(function () {
+                  wx.hideLoading();
+                }, 1000)
+              }
+            })
+          },
+          complete: function complete(e) {
+            console.log(e.errMsg);
+          }
+        });
+      }
+    })
   },
 
   /**
