@@ -282,23 +282,17 @@ Page({
             dottedLine: true,
             arrowLine: true
           };
-          //polyline.push(finishPolyline)
+          polyline.push(finishPolyline)
 
           //缩放地图
           let includePoints = _this.data.includePoints;
-          //includePoints.push({ longitude: travelLogs[0].longitude, latitude: travelLogs[0].latitude })
-          includePoints.push({ longitude: travelLogs[travelLogs.length - 1].longitude, latitude: travelLogs[travelLogs.length - 1].latitude})
-
-          //console.log(points);
-         // console.log(markers);
-          //return false;
+          if (travelLogs.length > 0){
+            //includePoints.push({ longitude: travelLogs[0].longitude, latitude: travelLogs[0].latitude })
+            includePoints.push({ longitude: travelLogs[travelLogs.length - 1].longitude, latitude: travelLogs[travelLogs.length - 1].latitude })
+          }
 
           //画线
-          polyline[0].points = markers;
-
-          console.log(polyline)
-          return false;
-
+          polyline[0].points = points;
           _this.setData({
             polyline: polyline,
             latitude: planPoints[0].latitude,
