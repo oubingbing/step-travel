@@ -31,6 +31,26 @@ Page({
       key: 'XCDBZ-EG7C6-2OIS6-MSJDG-OQ2FT-2EBED'
     });
 
+    let _this = this;
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        var latitude = res.latitude
+        var longitude = res.longitude
+        let includePoints = _this.data.includePoints;
+        includePoints.push({
+          longitude: longitude,
+          latitude: latitude
+        })
+
+        _this.setData({
+          latitude: latitude,
+          longitude: longitude,
+          includePoints: includePoints
+        })
+      }
+    })
+
   },
   onReady: function (e) {
     this.travelLogs();
@@ -38,6 +58,9 @@ Page({
     this.downLoadAvatar();
   },
   onShow:function(){
+
+
+
     if (app.newTravelPlan == true){
       this.plan();
       this.travelLogs();
@@ -214,11 +237,14 @@ Page({
 
         console.log(res.data.data);
         let resData = res.data.data;
-        if(resData == ''){
+        if(resData == null){
           _this.setData({
             showPostPlan:true
           })
+
+          return false;
         }
+
 
         if(res.data.error_code == 0){
           let markers = _this.data.markers;
@@ -256,15 +282,23 @@ Page({
             dottedLine: true,
             arrowLine: true
           };
-          polyline.push(finishPolyline)
+          //polyline.push(finishPolyline)
 
           //缩放地图
           let includePoints = _this.data.includePoints;
           //includePoints.push({ longitude: travelLogs[0].longitude, latitude: travelLogs[0].latitude })
           includePoints.push({ longitude: travelLogs[travelLogs.length - 1].longitude, latitude: travelLogs[travelLogs.length - 1].latitude})
 
+          //console.log(points);
+         // console.log(markers);
+          //return false;
+
           //画线
-          polyline[0].points = points;
+          polyline[0].points = markers;
+
+          console.log(polyline)
+          return false;
+
           _this.setData({
             polyline: polyline,
             latitude: planPoints[0].latitude,
