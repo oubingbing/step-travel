@@ -43,7 +43,6 @@ Page({
   },
   onReady: function (e) {
     this.mapCtx = wx.createMapContext('myMap')
-
   },
   /**
    * 选择旅行站点
@@ -109,6 +108,51 @@ Page({
       },
       complete: function (res) {
         //console.log(res);
+      }
+    })
+  },
+
+  clear:function(){
+    let _this = this;
+    wx.showModal({
+      title: '温馨提示',
+      content: '你确定要重新制定旅游线路吗？',
+      success: function (res) {
+        if (res.confirm) {
+          _this.setData({
+            plans: [],
+            travelDistance: 0,
+            includePoints: [],
+            markers: [],
+            polyline: [{
+              points: [],
+              color: "#FF4500",
+              width: 3,
+              dottedLine: true,
+              arrowLine: true
+            }]
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  /**
+   * 提交旅行计划
+   */
+  postData:function(){
+    let _this = this;
+    wx.showModal({
+      title: '温馨提示',
+      content: '你确定要提交旅游线路吗？',
+      success: function (res) {
+        if (res.confirm) {
+          _this.sumDistance();
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
       }
     })
   },

@@ -30,6 +30,10 @@ Page({
     showMap:true,
     showTravelLocation:true,
     showTravelLabel:true,
+    report:'',
+    mapView:1,
+    fullView:'full-view',
+    harfView:'harf-view'
   },
   onLoad:function(){
     this.plan();
@@ -66,6 +70,19 @@ Page({
     }
   },
 
+  changeView:function(){
+    let mapView = this.data.mapView;
+    if(mapView == 1){
+      this.setData({
+        mapView:2
+      })
+    }else{
+      this.setData({
+        mapView: 1
+      })
+    }
+  },
+
   ifShowTravelLocation:function(){
     let show = this.data.showTravelLocation;
     if (!show){
@@ -96,6 +113,22 @@ Page({
       })
     }
     console.log(this.data.markers)
+  },
+
+  getReport:function(){
+    wx.showLoading({ title: '海报生成中' });
+    let _this = this;
+    app.http('GET', `/travel_report/${this.data.plan.id}`,{},function (res) {
+
+        console.log(res.data.data);
+        if (res.data.data != ''){
+          _this.setData({
+            report: res.data.data
+          })
+          _this.drawReport();
+        }
+
+    });
   },
 
   /**
@@ -167,6 +200,34 @@ Page({
    * 绘制报告
    */
   drawReport:function(){
+    wx.hideLoading();
+    let user = wx.getStorageSync('user');
+    let report = this.data.report;
+    let plan = this.data.plan;
+
+    let status = '旅行中';
+    if(plan.status == 1){
+      status = '旅行中';
+    }else{
+      if (plan.status == 2){
+        status = '已终止';
+      }else{
+        status = '已完成';
+      }
+    }
+
+    let start = '';
+    let end = '';
+    report.points.map(item=>{
+      if(item.type == 3){
+        start = item.name
+      }else{
+        if(item.type == 1){
+          end = item.name
+        }
+      }
+    })
+
 
       this.setData({
         showReport:true,
@@ -193,20 +254,24 @@ Page({
       ctx.setFontSize(15)
       ctx.setFillStyle('#FFFFFF')
       ctx.setTextAlign('left')
-      ctx.fillText('叶子', (windowWidth / 2), 80)
-      ctx.fillText('旅行中', (windowWidth / 2), 100)
+      ctx.fillText(user.nickname, (windowWidth / 2), 80)
+      ctx.fillText(status, (windowWidth / 2), 100)
 
+      ctx.setFontSize(20)
       ctx.setTextAlign('center')
       ctx.fillText('步数旅行者', windowWidth / 2, 30)
-      ctx.fillText('深圳北站', windowWidth / 2, 155)
+
+      ctx.setFontSize(15)
+
+      ctx.fillText(start, windowWidth / 2, 155)
       ctx.drawImage('/image/jiantou.png', (windowWidth / 2) - (windowWidth / 30), 160, 20, 20);
-      ctx.fillText('北京天安门', windowWidth / 2, 195)
-      ctx.fillText('旅行了5个省，30座城市', windowWidth / 2, 240)
-      ctx.fillText('住了50个酒店', windowWidth / 2, 270)
-      ctx.fillText('游玩了100个景点', windowWidth / 2, 300)
-      ctx.fillText('下了90次馆子', windowWidth / 2, 330)
-      ctx.fillText('里程：400公里', (windowWidth / 2) - 70, 360)
-      ctx.fillText('步数：20000', (windowWidth / 2)+70, 360)
+      ctx.fillText(end, windowWidth / 2, 195)
+      ctx.fillText(`旅行了${report.travel.province}个省，${report.travel.city}座城市`, windowWidth / 2, 240)
+      ctx.fillText(`住了${report.poi.hotel}个酒店`, windowWidth / 2, 270)
+      ctx.fillText(`游玩了${report.poi.view}个景点`, windowWidth / 2, 300)
+      ctx.fillText(`下了${report.poi.food}次馆子`, windowWidth / 2, 330)
+      ctx.fillText(`行程：${report.travel.distance}公里`, (windowWidth / 2) - 70, 360)
+      ctx.fillText(`步数：${report.travel.step}`, (windowWidth / 2)+70, 360)
       ctx.save();
       ctx.setFillStyle('#CD2626')
       ctx.drawImage('/image/qrcode.jpg', (windowWidth / 2) + (windowWidth / 4), (windowHeight - (windowHeight/4)), 60, 60)

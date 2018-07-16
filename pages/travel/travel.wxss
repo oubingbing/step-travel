@@ -16,6 +16,16 @@ page{
   border-color: gainsboro;
 }
 
+.full-View{
+  width: 100%; 
+  height: 970rpx;
+}
+
+.harf-View{
+  width: 100%; 
+  height: 550rpx;
+}
+
 
 /** 内容样式 **/
 .step-content .today-step{

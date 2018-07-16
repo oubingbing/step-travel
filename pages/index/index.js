@@ -15,16 +15,19 @@ Page({
   },
 
   onLoad: function (option) {
+    wx.showLoading({ title: '加载中' });
     this.setData({
       user: wx.getStorageSync('user')
     })
-
-    this.getPersonalInfo();
     let _this = this;
     this.showAuth();
     this.statistic();
     this.steps(_this);
     this.loginForRunData();
+  },
+
+  onReady: function (e) {
+    this.getPersonalInfo();
   },
 
   /**
@@ -162,7 +165,7 @@ Page({
    * 获取步数列表
    */
   steps: function (_this) {
-    wx.showLoading({ title: '加载中' });
+    //wx.showLoading({ title: '加载中' });
     let order_by = 'run_at';
     let sort_by = 'desc';
     app.http(

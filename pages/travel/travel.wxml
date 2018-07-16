@@ -3,7 +3,7 @@
   <view class="page-section page-section-gap" wx:if="{{showMap}}">
     <map
       id="myMap"
-      style="width: 100%; height: 300px;"
+      class='{{mapView==1?"harf-View":"full-View"}}'
       latitude="{{latitude}}"
       longitude="{{longitude}}"
       markers="{{markers}}"
@@ -29,9 +29,9 @@
       <view class='icon'>
         <image src='/image/restart.png' bindtap='createTravel'></image>
         <image src='/image/show-label.png' bindtap='ifShowTravelLabel'></image>
-        <image src='/image/report.png' bindtap='drawReport'></image>
+        <image src='/image/report.png' bindtap='getReport'></image>
         <image src='/image/not-location.png' bindtap='ifShowTravelLocation'></image>
-        <image src='/image/all-view.png'></image>
+        <image src='/image/all-view.png' bindtap='changeView'></image>
       </view>
     </view>
 
