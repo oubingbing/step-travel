@@ -9,6 +9,10 @@ Page({
     longitude: 0,
     includePoints: [],
     markers: [],
+    travelLogMarkers:[],
+    notTravelLogMarkers:[],
+    notLabelMarkers:[],
+    labelMarkers:[],
     polyline: [{
       points: [],
       color: "#FF4500",
@@ -23,39 +27,20 @@ Page({
     showPostPlan:false,
     avatar:'',
     showReport:false,
-    showMap:true
+    showMap:true,
+    showTravelLocation:true,
+    showTravelLabel:true,
   },
   onLoad:function(){
     this.plan();
+    this.downLoadAvatar();
     qqmapsdk = new QQMapWX({
       key: 'XCDBZ-EG7C6-2OIS6-MSJDG-OQ2FT-2EBED'
     });
-
-    let _this = this;
-    wx.getLocation({
-      type: 'wgs84',
-      success: function (res) {
-        var latitude = res.latitude
-        var longitude = res.longitude
-        let includePoints = _this.data.includePoints;
-        includePoints.push({
-          longitude: longitude,
-          latitude: latitude
-        })
-
-        _this.setData({
-          latitude: latitude,
-          longitude: longitude,
-          includePoints: includePoints
-        })
-      }
-    })
-
+    this.getLocation();
   },
   onReady: function (e) {
     this.travelLogs();
-
-    this.downLoadAvatar();
   },
   onShow:function(){
     if (app.newTravelPlan == true){
@@ -81,17 +66,73 @@ Page({
     }
   },
 
+  ifShowTravelLocation:function(){
+    let show = this.data.showTravelLocation;
+    if (!show){
+      this.setData({
+        showTravelLocation:true,
+        markers: this.data.travelLogMarkers
+      })
+    }else{
+      this.setData({
+        showTravelLocation: false,
+        markers: this.data.notTravelLogMarkers
+      })
+    }
+  },
+
+  ifShowTravelLabel:function(){
+    let show = this.data.showTravelLabel;
+    console.log()
+    if (!show) {
+      this.setData({
+        showTravelLabel: true,
+        markers: this.data.labelMarkers
+      })
+    } else {
+      this.setData({
+        showTravelLabel: false,
+        markers: this.data.notLabelMarkers
+      })
+    }
+    console.log(this.data.markers)
+  },
+
+  /**
+   * 获取用户当前位置
+   */
+  getLocation:function(){
+    let _this = this;
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        var latitude = res.latitude
+        var longitude = res.longitude
+        let includePoints = _this.data.includePoints;
+        includePoints.push({
+          longitude: longitude,
+          latitude: latitude
+        })
+
+        _this.setData({
+          latitude: latitude,
+          longitude: longitude,
+          includePoints: includePoints
+        })
+      }
+    })
+  },
+
   /**
    * 下载用户头像
    */
   downLoadAvatar:function(){
-    let avatar = wx.getStorageSync('avatar');
     let _this = this;
-    console.log(avatar);
-    let avatarImage = wx.getStorageSync('avatar');
+    let avatarImage = _this.data.avatar;
+    let user = wx.getStorageSync('user');
     if (avatarImage == ''){
       wx.downloadFile({
-        url: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKWJ8B1DG0aIN3LVa6GEuo3Hgf1eIj8coyPY4wZyrJ3NMZBWhUNefdxJ0iamZDvJxBUQsicV3mwSN6Q/132',
+        url: user.avatar,
         success: function (res) {
           if (res.statusCode === 200) {
             wx.playVoice({
@@ -101,7 +142,6 @@ Page({
             _this.setData({
               avatar: res.tempFilePath
             })
-            wx.setStorageSync('avatar', res.tempFilePath);
           }
         }
       })
@@ -132,7 +172,7 @@ Page({
         showReport:true,
         showMap:false
       })
-      let avatarImage = wx.getStorageSync('avatar');
+      let avatarImage = this.data.avatar;
       console.log(wx.getSystemInfoSync().windowWidth);
       let windowWidth = (wx.getSystemInfoSync().windowWidth - 35);
       let windowHeight = wx.getSystemInfoSync().windowHeight;
@@ -172,8 +212,6 @@ Page({
       ctx.drawImage('/image/qrcode.jpg', (windowWidth / 2) + (windowWidth / 4), (windowHeight - (windowHeight/4)), 60, 60)
       ctx.drawImage(avatarImage, (windowWidth / 2) - 70, 55, 60, 60)
       ctx.draw();
-      
-
   },
 
   /**
@@ -192,12 +230,6 @@ Page({
               filePath: image,
               success(res) {
                 console.log(res)
-                wx.showLoading({
-                  title: '保存成功！',
-                });
-                setTimeout(function () {
-                  wx.hideLoading();
-                }, 1000)
               }
             })
           },
@@ -231,20 +263,17 @@ Page({
     console.log('plan');
     let _this = this;
     app.http('get', `/plan`,{}, res => {
-
         console.log(res.data.data);
         let resData = res.data.data;
         if(resData == null){
           _this.setData({
             showPostPlan:true
           })
-
           return false;
         }
 
-
         if(res.data.error_code == 0){
-          let markers = _this.data.markers;
+          let travelLogMarkers = _this.data.travelLogMarkers;
           let polyline = _this.data.polyline;
           let points = polyline[0].points;
           let planPoints = resData.points;
@@ -259,22 +288,127 @@ Page({
           let finishPoint = [];
           travelLogs.map((item,key)=>{
             //标记坐标点
-            markers.push({
-              id: key,
-              latitude: item.latitude,
-              longitude: item.longitude,
-              width: 50,
-              height: 50
-            });
+            if(key == travelLogs.length-1){
+              travelLogMarkers.push({
+                id: key,
+                iconPath: '/image/traveling.png',
+                latitude: item.latitude,
+                longitude: item.longitude,
+                width: 30,
+                height: 30,
+                label: {
+                  content: item.name,
+                  fontSize: 8,
+                  bgColor: "#FF6347",
+                  color: "#FFFFFF",
+                  padding: 5,
+                  borderRadius: 10
+                }
+              });
+            }else{
+              travelLogMarkers.push({
+                id: key,
+                latitude: item.latitude,
+                longitude: item.longitude,
+                width: 30,
+                height: 30
+              });
+            }
+
             finishPoint.push({
               latitude: item.latitude,
               longitude: item.longitude,
             });
           })
 
+          let linePoint = resData.points;
+          let travelLogLength = travelLogs.lenght;
+          let notTravelLogMarkers = _this.data.notTravelLogMarkers;
+          let notLabelMarkers = _this.data.notLabelMarkers;
+          linePoint.map((item, key) => {
+            let icon = '';
+            if (key == 0) {
+              icon = '/image/start.png';
+            } else {
+              if (key == linePoint.length - 1) {
+                icon = '/image/end.png';
+              } else {
+                icon = '/image/point.png';
+              }
+            }
+            travelLogMarkers.push({
+              iconPath:icon,
+              id: travelLogLength + key,
+              latitude: item.latitude,
+              longitude: item.longitude,
+              width: 30,
+              height: 30,
+              label: {
+                content: item.name,
+                fontSize: 8,
+                bgColor: "#FF6347",
+                color: "#FFFFFF",
+                padding: 5,
+                borderRadius: 10
+              }
+            });
+
+            notTravelLogMarkers.push({
+              iconPath: icon,
+              id: notTravelLogMarkers.length + key,
+              latitude: item.latitude,
+              longitude: item.longitude,
+              width: 30,
+              height: 30,
+              label: {
+                content: item.name,
+                fontSize: 8,
+                bgColor: "#FF6347",
+                color: "#FFFFFF",
+                padding: 5,
+                borderRadius: 10
+              }
+            });
+
+            notLabelMarkers.push({
+              iconPath: icon,
+              id: notTravelLogMarkers.length + key,
+              latitude: item.latitude,
+              longitude: item.longitude,
+              width: 30,
+              height: 30
+            })
+          })
+          //没有旅途点的标记
+          notTravelLogMarkers.push({
+            iconPath: '/image/traveling.png',
+            id: travelLogLength + 1,
+            latitude: travelLogs[travelLogs.length - 1].latitude,
+            longitude: travelLogs[travelLogs.length - 1].longitude,
+            width: 30,
+            height: 30,
+            label: {
+              content: travelLogs[travelLogs.length - 1].name,
+              fontSize: 8,
+              bgColor: "#FF6347",
+              color: "#FFFFFF",
+              padding: 5,
+              borderRadius: 10
+            }
+          });
+          notLabelMarkers.push({
+            iconPath: '/image/traveling.png',
+            id: travelLogLength + 1,
+            latitude: travelLogs[travelLogs.length - 1].latitude,
+            longitude: travelLogs[travelLogs.length - 1].longitude,
+            width: 30,
+            height: 30
+          })
+        
+
           let finishPolyline = {
             points: finishPoint,
-            color: "#FF4500",
+            color: "#1296DB",
             width: 3,
             dottedLine: true,
             arrowLine: true
@@ -284,20 +418,27 @@ Page({
           //缩放地图
           let includePoints = _this.data.includePoints;
           if (travelLogs.length > 0){
-            //includePoints.push({ longitude: travelLogs[0].longitude, latitude: travelLogs[0].latitude })
-            includePoints.push({ longitude: travelLogs[travelLogs.length - 1].longitude, latitude: travelLogs[travelLogs.length - 1].latitude })
+            includePoints.push({
+              longitude: travelLogs[travelLogs.length - 1].longitude,
+              latitude: travelLogs[travelLogs.length - 1].latitude 
+            })
           }
 
           //画线
           polyline[0].points = points;
+          let markers = travelLogMarkers;
           _this.setData({
             polyline: polyline,
             latitude: planPoints[0].latitude,
             longitude: planPoints[0].longitude,
             includePoints: includePoints,
-            markers: markers,
+            markers: notLabelMarkers,
             planId:resData.id,
-            plan: resData
+            plan: resData,
+            travelLogMarkers: travelLogMarkers,
+            notTravelLogMarkers: notTravelLogMarkers,
+            labelMarkers: notTravelLogMarkers,
+            notLabelMarkers: notLabelMarkers
           })
         }
       });
@@ -312,7 +453,7 @@ Page({
     app.http('GET',`/ravel_logs?page_size=${_this.data.pageSize}&page_number=${_this.data.pageNumber}`,
       {},
       function (res) {
-        console.log(res.data.data.page_data);
+        console.log(res.data.data);
         let logData = res.data.data.page_data;
         if(logData != null){
           let logs = _this.data.logs;
