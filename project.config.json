@@ -8,7 +8,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.8",
+	"libVersion": "1.9.94",
 	"appid": "wx20d53e3355af3d93",
 	"projectname": "%E6%AD%A5%E6%95%B0%E5%8E%BB%E6%97%85%E8%A1%8C",
 	"condition": {
@@ -35,6 +35,12 @@
 					"id": -1,
 					"name": "新建旅行计划",
 					"pathName": "pages/create_travel/create_travel",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "旅行",
+					"pathName": "pages/travel/travel",
 					"query": ""
 				}
 			]

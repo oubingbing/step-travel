@@ -5,18 +5,41 @@ Page({
     show_auth: app.globalData.show_auth,
     qrCode:'',
     imageUrl: app.globalData.imageUrl,
-    statistic:'',
+    todayStep:0,
+    totalStep:0,
     pageSize: 10,
     pageNumber: 1,
     initPageNumber: 1,
-    steps:[]
+    steps:[],
+    user:''
   },
 
   onLoad: function (option) {
+
+    this.setData({
+      user: wx.getStorageSync('user')
+    })
+
+    this.getPersonalInfo();
     let _this = this;
     this.showAuth();
     this.statistic();
     this.steps(_this);
+    this.loginForRunData();
+  },
+
+  /**
+   * 获取个人信息
+   */
+  getPersonalInfo() {
+    let _this = this;
+    app.http('get', `/personal_info`, {}, res => {
+      console.log(res.data.data);
+      _this.setData({
+        user: res.data.data
+      })
+      wx.setStorageSync('user', res.data.data);
+    });
   },
 
   /**
@@ -32,8 +55,7 @@ Page({
           });
         } else {
           //获取二维码
-          that.getQrCode(that);
-          that.postRunData();
+          //that.loginForRunData();
         }
       }
     })
@@ -73,15 +95,16 @@ Page({
    * 收集用户步数
    */
   postRunData: function (encryptedData,iv,code){
+    let _this = this;
     app.http('post', `/run_data`,
       {
         encrypted_data: encryptedData,
         iv: iv,
         code: code
       }, res => {
-        
         console.log(res);
-
+        _this.statistic();
+        _this.steps(_this);
       });
   },
 
@@ -98,9 +121,12 @@ Page({
     app.login(null, null, null, function () {
       console.log('登录中');
       //获取二维码
-      _this.getQrCode(_this);
-      wx.authorize({ scope: "scope.werun" })
-      wx.authorize({ scope: "scope.userLocation" })
+      wx.authorize({
+        scope: "scope.werun", success(res) {
+          console.log('授权获得微信运动数据');
+          _this.loginForRunData();
+          _this.getPersonalInfo();
+        }})
     });
   },
 
@@ -122,7 +148,12 @@ Page({
   statistic:function(){
     let _this = this;
     app.http('GET', '/run_statistic', {}, function (res) {
-      _this.setData({ statistic:res.data.data})
+      let todayStep = res.data.data.today_step != null ? res.data.data.today_step:0;
+      let totalStep = res.data.data.total_step != null ? res.data.data.total_step:0;
+      _this.setData({ 
+        todayStep: todayStep,
+        totalStep: totalStep
+        })
     });
   },
 
@@ -138,7 +169,7 @@ Page({
        `,
         {}, 
         function (res) {
-          console.log(res.data.data);
+          console.log(res);
           if(res.data.error_code == 0){
             let steps = _this.data.steps;
             let stepData = res.data.data.page_data;
@@ -153,8 +184,8 @@ Page({
     });
   },
   /**
- * 上拉加载更多
- */
+   * 上拉加载更多
+   */
   onReachBottom: function () {
     let _this = this;
     this.steps(_this);

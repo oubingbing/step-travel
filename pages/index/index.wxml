@@ -1,16 +1,27 @@
 <view class='container'>
 
+  <view class='user-container'>
+    <view class='user-info' wx:if="{{user != ''}}">
+      <view class='user'>
+        <image class='user-image' src='{{user.avatar}}'></image>
+      </view>
+      <view class='step-log'>
+        <view>旅行记录</view>
+      </view>
+    </view>
+  </view>
+
   <!-- 头部 -->
   <view class='header'>
     <view class='header-content'>
       <view class='step-content'>
         <view class='today-step'>
           <view class='label'>今天</view>
-          <view class='step'>{{statistic.today_step}}</view>
+          <view class='step'>{{todayStep}}</view>
         </view>
         <view class='total-step'>
           <view class='label'>累计</view>
-          <view class='step'>{{statistic.total_step}}</view>
+          <view class='step'>{{totalStep}}</view>
         </view>
       </view>
     </view>

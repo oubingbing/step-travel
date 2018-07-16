@@ -12,6 +12,8 @@ App({
     this.globalData.imageUrl = 'http://image.kucaroom.com/';
     this.globalData.bgIimage = this.globalData.imageUrl+'30269a739a66831daa31ec93d28318af.jpg';
 
+    this.newTravelPlan = false;
+
     let token = wx.getStorageSync('token');
     if (!token) {
       let _this = this;
@@ -137,6 +139,7 @@ App({
     apiUrl: null,
     color: '0aecc3',
     imageUrl:'',
-    bgImage:''
+    bgImage:'',
+    newTravelPlan:false
   }
 })

@@ -3,11 +3,11 @@
   <view class="page-section page-section-gap">
     <map
       id="myMap"
-      style="width: 100%; height: 200px;"
+      style="width: 100%; height: 230px;"
       latitude="{{latitude}}"
       longitude="{{longitude}}"
       markers="{{markers}}"
-      covers="{{covers}}"
+      include-points="{{includePoints}}"
       polyline="{{polyline}}"
       show-location
     ></map>
@@ -19,111 +19,28 @@
     <view class='content'>
 
     <view class='post-container'>
+      <view class='post' bindtap='sumDistance' wx:if="{{plans.length > 0}}">
+        <view>提交旅行计划</view>
+      </view>
       <view class='post' bindtap='chooseLocation'>
-        <view>开始</view>
+        <view>添加旅行站点</view>
       </view>
     </view>
 
-    <view class='post-container'>
-      <view class='post' bindtap='sumDistance'>
-        <view>开始</view>
+      <view class='item' wx:for="{{plans}}" wx:key="{{plans}}">
+          <view class='left'>
+            <view class='date travel-start' wx:if="{{item.id == 0}}">出发点</view>
+            <view class='date' wx:if="{{item.id > 0}}">第{{item.id}}站</view>
+          </view>
+          <view class='right'>
+            <view class='travel-log'>
+              <view class='address'>
+                <view class='address-content'>{{item.name}}</view>
+                <view class='address-label'>地址：{{item.address}}</view>
+              </view>
+            </view>
+          </view>
       </view>
     </view>
-
-      <view class='item'>
-          <view class='left'>
-            <view class='date travel-start'>出发点</view>
-          </view>
-          <view class='right'>
-            <view class='travel-log'>
-              <view class='travel-point'>
-                <view class='left-item'>
-                  <view>经度：120</view>
-                </view>
-                <view class='rightitem'>
-                  <view>维度：32</view>
-                </view>
-              </view>
-
-              <view class='address'>
-                <view class='address-label'>地点：</view>
-                <view class='address-content'>深圳南山地铁站</view>
-              </view>
-            </view>
-          </view>
-      </view>
-
-      <view class='item'>
-          <view class='left'>
-            <view class='date'>第一站</view>
-          </view>
-          <view class='right'>
-            <view class='travel-log'>
-              <view class='travel-point'>
-                <view class='left-item'>
-                  <view>经度：120</view>
-                </view>
-                <view class='rightitem'>
-                  <view>维度：32</view>
-                </view>
-              </view>
-
-              <view class='address'>
-                <view class='address-label'>地点：</view>
-                <view class='address-content'>惠州西湖</view>
-              </view>
-            </view>
-          </view>
-      </view>
-
-      <view class='item'>
-          <view class='left'>
-            <view class='date'>第二站</view>
-          </view>
-          <view class='right'>
-            <view class='travel-log'>
-              <view class='travel-point'>
-                <view class='left-item'>
-                  <view>经度：120</view>
-                </view>
-                <view class='rightitem'>
-                  <view>维度：32</view>
-                </view>
-              </view>
-
-              <view class='address'>
-                <view class='address-label'>地点：</view>
-                <view class='address-content'>梅州客家围楼</view>
-              </view>
-            </view>
-          </view>
-      </view>
-
-      <view class='item'>
-          <view class='left'>
-            <view class='date'>第三站</view>
-          </view>
-          <view class='right'>
-            <view class='travel-log'>
-              <view class='travel-point'>
-                <view class='left-item'>
-                  <view>经度：120</view>
-                </view>
-                <view class='rightitem'>
-                  <view>维度：32</view>
-                </view>
-              </view>
-
-              <view class='address'>
-                <view class='address-label'>地点：</view>
-                <view class='address-content'>南昌</view>
-              </view>
-            </view>
-          </view>
-      </view>
-
-    </view>
-
   </view>
-
 </view>

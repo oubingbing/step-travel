@@ -1,12 +1,13 @@
 page{
   padding: 0rpx;
+  background: white;
 }
 
 .page-body{
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: -15rpx;
+  margin-top: -13rpx;
 }
 
 .page-section-gap{
@@ -69,7 +70,7 @@ page{
   border-right-style:solid;
   border-width:1rpx;
   border-color: #66CDAA;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .left .date{
@@ -105,64 +106,24 @@ page{
   flex-direction: column;
   color: gray;
   font-size: 35rpx;
-  border-radius: 15rpx;
+  border-radius: 10rpx;
   padding-right: 5rpx;
-}
-
-.travel-log .travel-point{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 10rpx;
-  background: #66CDAA;
-  color: white;
-}
-
-.travel-log .step-number{
-  padding-top: 10rpx;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  padding: 10rpx;
-}
-
-.step-number .travel-label{
-  width: 20%;
-}
-
-.step-number .travel-number{
-  width: 80%;
 }
 
 .travel-log .address{
   width: 100%;
   display: flex;
-  flex-direction: row;
-  padding: 10rpx;
+  flex-direction: column;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
 }
 
 .address .address-label{
-  width: 20%;
+  font-size: 30rpx;
 }
 
-.address .address-content{
-  width: 80%;
-}
-
-.my-log{
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  padding: 10rpx;
-}
-
-.my-log .my-log-label{
-  width: 20%;
-}
-
-.my-log .my-log-content{
-  width: 80%;
-}
 
 /**post css**/
 
@@ -171,16 +132,19 @@ page{
   display: flex;
   flex-direction: row;
   padding: 15rpx;
+  justify-content: space-around;
 }
 
 .post {
-  width: 100%;
   display: flex;
   flex-direction: row;
   background: #FF6347;
   color: white;
   font-size: 30rpx;
-  padding: 10rpx;
-  border-radius: 5rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  border-radius: 10rpx;
   justify-content: center;
 }
