@@ -15,7 +15,6 @@ Page({
   },
 
   onLoad: function (option) {
-
     this.setData({
       user: wx.getStorageSync('user')
     })
@@ -102,6 +101,7 @@ Page({
         iv: iv,
         code: code
       }, res => {
+        wx.hideLoading();
         console.log(res);
         _this.statistic();
         _this.steps(_this);
@@ -148,6 +148,7 @@ Page({
   statistic:function(){
     let _this = this;
     app.http('GET', '/run_statistic', {}, function (res) {
+      wx.hideLoading();
       let todayStep = res.data.data.today_step != null ? res.data.data.today_step:0;
       let totalStep = res.data.data.total_step != null ? res.data.data.total_step:0;
       _this.setData({ 
@@ -161,6 +162,7 @@ Page({
    * 获取步数列表
    */
   steps: function (_this) {
+    wx.showLoading({ title: '加载中' });
     let order_by = 'run_at';
     let sort_by = 'desc';
     app.http(
@@ -169,6 +171,7 @@ Page({
        `,
         {}, 
         function (res) {
+          wx.hideLoading();
           console.log(res);
           if(res.data.error_code == 0){
             let steps = _this.data.steps;

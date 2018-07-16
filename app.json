@@ -6,13 +6,13 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#66CDAA",
-    "navigationBarTitleText": "步数之旅",
+    "navigationBarBackgroundColor": "#1296DB",
+    "navigationBarTitleText": "步数旅行者",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "color": "#515151",
-    "selectedColor": "#66CDAA",
+    "selectedColor": "#1296DB",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [

@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   height: 200rpx;
-  background: #66CDAA;
+  background: #1296DB;
 }
 
 .user-container .user-info{
@@ -56,7 +56,7 @@
   background: white;
   padding-bottom: 50rpx;
   padding-top: 50rpx;
-  color:#66CDAA;
+  color:#1296DB;
 }
 
 .header .header-content{
@@ -79,7 +79,7 @@
   align-items: center;
   border-right-style:solid;
   border-width:1rpx;
-  border-color: #66CDAA;
+  border-color: #CCCCCC;
 }
 
 .step-content .total-step{
@@ -122,7 +122,7 @@
   flex-direction: column;
   border-right-style:solid;
   border-width:1rpx;
-  border-color: #66CDAA;
+  border-color: #CCCCCC;
   justify-content: center;
 }
 
@@ -130,7 +130,7 @@
 .left .date{
   position: absolute;
   left: 120rpx;
-  background: #66CDAA;
+  background: #1296DB;
   color: white;
   font-size: 25rpx;
   padding-top: 5rpx;
@@ -155,8 +155,8 @@
   width: 100%;
   border-bottom-style:solid;
   border-width:1rpx;
-  border-color: #66CDAA;
-  color: #66CDAA;
+  border-color: #CCCCCC;
+  color: #1296DB;
 }
 
 /** 授权按钮 **/

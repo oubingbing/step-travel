@@ -68,7 +68,7 @@ page{
   flex-direction: column;
   border-right-style:solid;
   border-width:1rpx;
-  border-color: #66CDAA;
+  border-color: #CCCCCC;
   justify-content: flex-start;
 }
 
@@ -76,7 +76,7 @@ page{
 .left .date{
   position: absolute;
   left: 35rpx;
-  background: #66CDAA;
+  background: #1296DB;
   color: white;
   font-size: 25rpx;
   padding-top: 5rpx;
@@ -111,7 +111,7 @@ page{
   flex-direction: row;
   justify-content: space-around;
   padding: 20rpx;
-  background: #66CDAA;
+  background: #1296DB;
   color: white;
   font-size: 30rpx;
 }

@@ -80,6 +80,7 @@ App({
             }
           })
         } else {
+          wx.hideLoading();
           console.log('未授权');
         }
       }
@@ -138,6 +139,7 @@ App({
     userInfo: null,
     apiUrl: null,
     color: '0aecc3',
+    bgColor:'#1296DB',
     imageUrl:'',
     bgImage:'',
     newTravelPlan:false

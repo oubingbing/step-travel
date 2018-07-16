@@ -121,6 +121,8 @@ Page({
     let len = plans.length;
     let dist = 0;
 
+    wx.showLoading({title: '提交中'});
+
     plans.map((item,key)=>{
       if (key == (len-1)){
         return false;
@@ -138,6 +140,7 @@ Page({
         distance: dist,
         plans: plans
       }, res => {
+        wx.hideLoading();
         console.log(res);
         if(res.data.error_code == 0){
           app.newTravelPlan = true;

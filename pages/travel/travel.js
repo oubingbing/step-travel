@@ -58,13 +58,7 @@ Page({
     this.downLoadAvatar();
   },
   onShow:function(){
-
-
-
     if (app.newTravelPlan == true){
-      this.plan();
-      this.travelLogs();
-      app.newTravelPlan = false;
       this.setData({
         includePoints: [],
         markers: [],
@@ -81,6 +75,9 @@ Page({
         plan: '',
         showPostPlan: false
       })
+      this.plan();
+      this.travelLogs();
+      app.newTravelPlan = false;
     }
   },
 
@@ -360,7 +357,11 @@ Page({
               _this.setData({
                 logs: newLogs
               })
-              _this.updateLog(item.id, name, address);
+              let ad_info = res.result.ad_info;
+              let province = ad_info.province;
+              let city = ad_info.city;
+              let district = ad_info.district;
+              _this.updateLog(item.id, name, address, province, city, district);
             }
           },
           fail: function (res) {
@@ -374,12 +375,15 @@ Page({
   /**
    * 更新日志的地理信息
    */
-  updateLog:function(logId,name,address){
+  updateLog: function (logId, name, address, province, city, district){
     app.http('put', `/update_log`,
       {
         name: name,
         address: address,
-        log_id: logId
+        log_id: logId,
+        province: province,
+        district: district,
+        city:city
       }, res => {
 
         console.log(res);
