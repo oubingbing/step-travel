@@ -232,10 +232,11 @@ page{
   display: flex;
   flex-direction: column;
   align-items: center;
+background: #DCDCDC;
 }
 
 .icon-container .icon{
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-direction: row;
   padding-top:15rpx;
@@ -249,7 +250,6 @@ page{
 }
 
 /** 画图 **/
-
 .canvas-container{
   width: 100%;
   height: 100%;

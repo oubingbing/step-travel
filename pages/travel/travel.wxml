@@ -14,6 +14,16 @@
     ></map>
   </view>
 
+    <view class='icon-container' wx:if="{{!showPostPlan}}">
+      <view class='icon'>
+        <image src='/image/restart.png' bindtap='createTravel'></image>
+        <image src='/image/show-label.png' bindtap='ifShowTravelLabel'></image>
+        <image src='/image/report.png' bindtap='getReport'></image>
+        <image src='/image/not-location.png' bindtap='ifShowTravelLocation'></image>
+        <image src='/image/all-view.png' bindtap='changeView'></image>
+      </view>
+    </view>
+
     <!-- 具体步数内容 -->
   <view wx:if="{{showMap}}" class='content-container'>
 
@@ -22,16 +32,6 @@
     <view class='post-container' bindtap='createTravel' wx:if="{{showPostPlan}}">
       <view class='post'>
         <view>制定旅行线路</view>
-      </view>
-    </view>
-
-    <view class='icon-container' wx:if="{{!showPostPlan}}">
-      <view class='icon'>
-        <image src='/image/restart.png' bindtap='createTravel'></image>
-        <image src='/image/show-label.png' bindtap='ifShowTravelLabel'></image>
-        <image src='/image/report.png' bindtap='getReport'></image>
-        <image src='/image/not-location.png' bindtap='ifShowTravelLocation'></image>
-        <image src='/image/all-view.png' bindtap='changeView'></image>
       </view>
     </view>
 
