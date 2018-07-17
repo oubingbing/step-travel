@@ -5,7 +5,7 @@
       <view class='user'>
         <image class='user-image' src='{{user.avatar}}'></image>
       </view>
-      <view class='step-log'>
+      <view class='step-log' bindtap='openTravelList'>
         <view>旅行记录</view>
       </view>
     </view>

@@ -33,7 +33,8 @@ Page({
     report:'',
     mapView:1,
     fullView:'full-view',
-    harfView:'harf-view'
+    harfView:'harf-view',
+    showFinish:false
   },
   onLoad:function(){
     this.plan();
@@ -51,6 +52,10 @@ Page({
       this.setData({
         includePoints: [],
         markers: [],
+        travelLogMarkers: [],
+        notTravelLogMarkers: [],
+        notLabelMarkers: [],
+        labelMarkers: [],
         polyline: [{
           points: [],
           color: "#FF4500",
@@ -62,8 +67,19 @@ Page({
         pageNumber: 1,
         initPageNumber: 1,
         plan: '',
-        showPostPlan: false
+        showPostPlan: false,
+        avatar: '',
+        showReport: false,
+        showMap: true,
+        showTravelLocation: true,
+        showTravelLabel: true,
+        report: '',
+        mapView: 1,
+        fullView: 'full-view',
+        harfView: 'harf-view',
+        showFinish: false
       })
+
       this.plan();
       this.travelLogs();
       app.newTravelPlan = false;
@@ -354,22 +370,34 @@ Page({
           travelLogs.map((item,key)=>{
             //标记坐标点
             if(key == travelLogs.length-1){
-              travelLogMarkers.push({
-                id: key,
-                iconPath: '/image/traveling.png',
-                latitude: item.latitude,
-                longitude: item.longitude,
-                width: 30,
-                height: 30,
-                label: {
-                  content: item.name,
-                  fontSize: 8,
-                  bgColor: "#FF6347",
-                  color: "#FFFFFF",
-                  padding: 5,
-                  borderRadius: 10
-                }
-              });
+              if(item.name != null){
+                travelLogMarkers.push({
+                  id: key,
+                  iconPath: '/image/traveling.png',
+                  latitude: item.latitude,
+                  longitude: item.longitude,
+                  width: 30,
+                  height: 30,
+                  label: {
+                    content: item.name,
+                    fontSize: 8,
+                    bgColor: "#FF6347",
+                    color: "#FFFFFF",
+                    padding: 5,
+                    borderRadius: 10
+                  }
+                });
+              }else{
+                travelLogMarkers.push({
+                  id: key,
+                  iconPath: '/image/traveling.png',
+                  latitude: item.latitude,
+                  longitude: item.longitude,
+                  width: 30,
+                  height: 30
+                });
+              }
+              
             }else{
               travelLogMarkers.push({
                 id: key,
@@ -401,39 +429,60 @@ Page({
                 icon = '/image/point.png';
               }
             }
-            travelLogMarkers.push({
-              iconPath:icon,
-              id: travelLogLength + key,
-              latitude: item.latitude,
-              longitude: item.longitude,
-              width: 30,
-              height: 30,
-              label: {
-                content: item.name,
-                fontSize: 8,
-                bgColor: "#FF6347",
-                color: "#FFFFFF",
-                padding: 5,
-                borderRadius: 10
-              }
-            });
 
-            notTravelLogMarkers.push({
-              iconPath: icon,
-              id: notTravelLogMarkers.length + key,
-              latitude: item.latitude,
-              longitude: item.longitude,
-              width: 30,
-              height: 30,
-              label: {
-                content: item.name,
-                fontSize: 8,
-                bgColor: "#FF6347",
-                color: "#FFFFFF",
-                padding: 5,
-                borderRadius: 10
-              }
-            });
+            if (item.name != null){
+              travelLogMarkers.push({
+                iconPath: icon,
+                id: travelLogLength + key,
+                latitude: item.latitude,
+                longitude: item.longitude,
+                width: 30,
+                height: 30,
+                label: {
+                  content: item.name,
+                  fontSize: 8,
+                  bgColor: "#FF6347",
+                  color: "#FFFFFF",
+                  padding: 5,
+                  borderRadius: 10
+                }
+              });
+
+              notTravelLogMarkers.push({
+                iconPath: icon,
+                id: notTravelLogMarkers.length + key,
+                latitude: item.latitude,
+                longitude: item.longitude,
+                width: 30,
+                height: 30,
+                label: {
+                  content: item.name,
+                  fontSize: 8,
+                  bgColor: "#FF6347",
+                  color: "#FFFFFF",
+                  padding: 5,
+                  borderRadius: 10
+                }
+              });
+            }else{
+              travelLogMarkers.push({
+                iconPath: icon,
+                id: travelLogLength + key,
+                latitude: item.latitude,
+                longitude: item.longitude,
+                width: 30,
+                height: 30
+              });
+
+              notTravelLogMarkers.push({
+                iconPath: icon,
+                id: notTravelLogMarkers.length + key,
+                latitude: item.latitude,
+                longitude: item.longitude,
+                width: 30,
+                height: 30
+              });
+            }
 
             notLabelMarkers.push({
               iconPath: icon,
@@ -444,32 +493,35 @@ Page({
               height: 30
             })
           })
-          //没有旅途点的标记
-          notTravelLogMarkers.push({
-            iconPath: '/image/traveling.png',
-            id: travelLogLength + 1,
-            latitude: travelLogs[travelLogs.length - 1].latitude,
-            longitude: travelLogs[travelLogs.length - 1].longitude,
-            width: 30,
-            height: 30,
-            label: {
-              content: travelLogs[travelLogs.length - 1].name,
-              fontSize: 8,
-              bgColor: "#FF6347",
-              color: "#FFFFFF",
-              padding: 5,
-              borderRadius: 10
-            }
-          });
-          notLabelMarkers.push({
-            iconPath: '/image/traveling.png',
-            id: travelLogLength + 1,
-            latitude: travelLogs[travelLogs.length - 1].latitude,
-            longitude: travelLogs[travelLogs.length - 1].longitude,
-            width: 30,
-            height: 30
-          })
-        
+          if (travelLogs.length > 0){
+            console.log('这到底是啥：' + travelLogs[travelLogs.length - 1].name);
+            //没有旅途点的标记
+            notTravelLogMarkers.push({
+              iconPath: '/image/traveling.png',
+              id: travelLogLength + 1,
+              latitude: travelLogs[travelLogs.length - 1].latitude,
+              longitude: travelLogs[travelLogs.length - 1].longitude,
+              width: 30,
+              height: 30,
+              label: {
+                content: travelLogs[travelLogs.length - 1].name,
+                fontSize: 8,
+                bgColor: "#FF6347",
+                color: "#FFFFFF",
+                padding: 5,
+                borderRadius: 10
+              }
+            }); 
+            
+            notLabelMarkers.push({
+              iconPath: '/image/traveling.png',
+              id: travelLogLength + 1,
+              latitude: travelLogs[travelLogs.length - 1].latitude,
+              longitude: travelLogs[travelLogs.length - 1].longitude,
+              width: 30,
+              height: 30
+            })
+          }
 
           let finishPolyline = {
             points: finishPoint,
@@ -487,10 +539,18 @@ Page({
               longitude: travelLogs[travelLogs.length - 1].longitude,
               latitude: travelLogs[travelLogs.length - 1].latitude 
             })
+          }else{
+            includePoints.push({
+              longitude: points[points.length - 1].longitude,
+              latitude: points[points.length - 1].latitude
+            })
           }
+
 
           //画线
           polyline[0].points = points;
+          console.log('地图线路的数据：');
+          console.log(polyline);
           let markers = travelLogMarkers;
           _this.setData({
             polyline: polyline,
@@ -503,7 +563,8 @@ Page({
             travelLogMarkers: travelLogMarkers,
             notTravelLogMarkers: notTravelLogMarkers,
             labelMarkers: notTravelLogMarkers,
-            notLabelMarkers: notLabelMarkers
+            notLabelMarkers: notLabelMarkers,
+            showFinish:resData.status == 3?true:false
           })
         }
       });
@@ -731,6 +792,25 @@ Page({
     wx.navigateTo({
       url: '/pages/create_travel/create_travel'
     })
+  },
+
+  /**
+   * 分享
+   */
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '说走就走，让步数带你去旅行吧',
+      path: 'pages/index/index',
+      imageUrl: '/image/share-pic.jpg',
+      success: function (res) {
+      },
+      fail: function (res) {
+      }
+    }
   },
 
   /**

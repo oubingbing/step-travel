@@ -179,7 +179,7 @@ page{
   width: 85%;
 }
 
-.my-log-content .foods,.hotel{
+.my-log-content .foods{
   display: flex;
   flex-direction:column;
   width: 100%;
@@ -280,15 +280,4 @@ background: #DCDCDC;
 
 .long-tap-tip{
   color: white;
-}
-
-.finish-travel{
-  position: fixed;
-  top: 700rpx;
-  right: 20rpx;
-}
-
-.finish-travel image{
-  width: 150rpx;
-  height: 150rpx;
 }

@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/travel/travel",
-    "pages/create_travel/create_travel"
+    "pages/create_travel/create_travel",
+    "pages/travel_list/travel_list",
+    "pages/travel_detail/travel_detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

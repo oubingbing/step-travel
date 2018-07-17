@@ -1,0 +1,25 @@
+<view class='container'>
+  <view class='container-content'>
+
+    <view class='item' 
+          wx:for="{{plans}}" 
+          wx:key="{{plans}}" 
+          data-objid='{{item.id}}'
+          bindtap='openDetail'>
+      <view class='header'>
+        <view>{{item.start_point}}</view>
+        <image src='/image/jiantou.png'></image>
+        <view>{{item.end_point}}</view>
+      </view>
+      <view class='body'>
+        <view class='body-content'>
+          <view class='body-teim' 
+                wx:for="{{item.points}}" 
+                wx:key="{{item.points}}" 
+                wx:for-item="sub">{{sub.name}}</view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</view>

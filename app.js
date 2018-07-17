@@ -2,7 +2,7 @@
 App({
   onLaunch: function () {
 
-    this.globalData.appKey = 'rEpRe1iuBg4q1KGB';
+    this.globalData.appKey = 'kMePOZ4fvHllbAUe';
 
     //设置基本接口全局变量
     this.globalData.apiUrl = 'https://lianyan.kucaroom.com/api/wechat';

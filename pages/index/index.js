@@ -189,6 +189,7 @@ Page({
           }
     });
   },
+  
   /**
    * 上拉加载更多
    */
@@ -206,14 +207,20 @@ Page({
       console.log(res.target)
     }
     return {
-      title: '说走就走，让步数代你去旅行吧',
+      title: '说走就走，让步数带你去旅行吧',
       path: 'pages/index/index',
-      imageUrl: '/image/compare_face.jpg',
+      imageUrl: '/image/share-pic.jpg',
       success: function (res) {
       },
       fail: function (res) {
       }
     }
   },
+
+  openTravelList:function(){
+    wx.navigateTo({
+      url: '/pages/travel_list/travel_list'
+    })
+  }
 
 })

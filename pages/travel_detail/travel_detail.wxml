@@ -1,6 +1,6 @@
 
 <view class="page-body">
-  <view class="page-section page-section-gap">
+  <view class="page-section page-section-gap" wx:if="{{showMap}}">
     <map
       id="myMap"
       class='{{mapView==1?"harf-View":"full-View"}}'
@@ -14,9 +14,8 @@
     ></map>
   </view>
 
-    <view class='icon-container' wx:if="{{!showPostPlan}}">
+    <view class='icon-container'>
       <view class='icon'>
-        <image src='/image/restart.png' bindtap='createTravel'></image>
         <image src='/image/show-label.png' bindtap='ifShowTravelLabel'></image>
         <image src='/image/report.png' bindtap='getReport'></image>
         <image src='/image/not-location.png' bindtap='ifShowTravelLocation'></image>
@@ -28,13 +27,6 @@
   <view wx:if="{{showMap}}" class='content-container'>
 
     <view class='content'>
-
-    <view class='post-container' bindtap='createTravel' wx:if="{{showPostPlan}}">
-      <view class='post'>
-        <view>制定旅行线路</view>
-      </view>
-    </view>
-
       <view class='item' wx:for="{{logs}}" wx:key="{{logs}}">
           <view class='left'>
             <view class='date'>{{item.run_at}}</view>

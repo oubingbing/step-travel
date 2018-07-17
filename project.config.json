@@ -9,8 +9,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.2.0",
-	"appid": "wx20d53e3355af3d93",
-	"projectname": "%E6%AD%A5%E6%95%B0%E5%8E%BB%E6%97%85%E8%A1%8C",
+	"appid": "wx22f8555c54b3c818",
+	"projectname": "%E6%AD%A5%E6%95%B0%E6%97%85%E8%A1%8C%E8%80%85",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -42,6 +42,18 @@
 					"name": "旅行",
 					"pathName": "pages/travel/travel",
 					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "旅行列表",
+					"pathName": "pages/travel_list/travel_list",
+					"query": ""
+				},
+				{
+					"id": 3,
+					"name": "旅行计划详情",
+					"pathName": "pages/travel_detail/travel_detail",
+					"query": "id=38"
 				}
 			]
 		}
