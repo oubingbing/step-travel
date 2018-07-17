@@ -107,8 +107,8 @@ page{
 
 .right .travel-log{
   width: 100%;
-  background: #66CDAA;
-  color: white;
+  background: #E6E6E6;
+  color: gray;
   display: flex;
   flex-direction: column;
 
@@ -189,7 +189,7 @@ page{
 
 .foods .food-wall{
   width: 90%;
-  background: #F0F8FF;
+  background: white;
   color: #666666;
   padding: 10rpx;
   border-radius: 10rpx;
@@ -204,7 +204,7 @@ page{
 
 .views .views-wall{
   width: 90%;
-  background: #F0F8FF;
+  background: white;
   color: #666666;
   padding: 10rpx;
   border-radius: 10rpx;
