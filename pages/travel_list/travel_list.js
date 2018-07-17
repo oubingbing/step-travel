@@ -7,7 +7,8 @@ Page({
     plans:[],
     pageNumber: 1,
     initPageNumber: 1,
-    pageSize: 10
+    pageSize: 10,
+    showGeMoreLoadin:false
   },
   onLoad: function () {
     this.getList();
@@ -32,7 +33,8 @@ Page({
 
       _this.setData({
         plans:plans,
-        pageNumber: _this.data.pageNumber + 1 
+        pageNumber: _this.data.pageNumber + 1 ,
+        showGeMoreLoadin:false
       })
     });
   },
@@ -49,6 +51,9 @@ Page({
    */
   onReachBottom: function () {
     let _this = this;
+    _this.setData({
+      showGeMoreLoadin:true
+    })
     this.getList(_this);
   },
 

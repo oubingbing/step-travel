@@ -11,7 +11,8 @@ Page({
     pageNumber: 1,
     initPageNumber: 1,
     steps:[],
-    user:''
+    user:'',
+    showGeMoreLoadin:false
   },
 
   onLoad: function (option) {
@@ -184,7 +185,8 @@ Page({
             }
             _this.setData({
               steps:steps,
-              pageNumber: _this.data.pageNumber + 1 
+              pageNumber: _this.data.pageNumber + 1 ,
+              showGeMoreLoadin:false
             })
           }
     });
@@ -195,6 +197,9 @@ Page({
    */
   onReachBottom: function () {
     let _this = this;
+    _this.setData({
+      showGeMoreLoadin:true
+    })
     this.steps(_this);
   },
 

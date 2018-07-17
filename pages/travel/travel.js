@@ -34,7 +34,8 @@ Page({
     mapView:1,
     fullView:'full-view',
     harfView:'harf-view',
-    showFinish:false
+    showFinish:false,
+    showGeMoreLoadin:false
   },
   onLoad:function(){
     this.plan();
@@ -588,7 +589,8 @@ Page({
           })
           _this.setData({
             logs: logs,
-            pageNumber: _this.data.pageNumber + 1 
+            pageNumber: _this.data.pageNumber + 1 ,
+            showGeMoreLoadin:false
           })
          _this.exchangeLocation(_this,logData);
           _this.getPoi(_this, logData);
@@ -818,6 +820,9 @@ Page({
    */
   onReachBottom: function () {
     let _this = this;
+    _this.setData({
+      showGeMoreLoadin:true
+    })
     this.travelLogs();
   },
 })
