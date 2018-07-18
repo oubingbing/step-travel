@@ -18,7 +18,7 @@
     <view class='content'>
     <view class='post-container'>
       <view class='post' bindtap='postData' wx:if="{{plans.length > 0}}">
-        <view>提交旅行计划</view>
+        <view>提交旅行线路</view>
       </view>
       <view class='post' bindtap='clear' wx:if="{{plans.length > 0}}">
         <view>重新添加</view>

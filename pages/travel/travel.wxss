@@ -11,9 +11,6 @@ page{
 
 .page-section-gap{
   box-sizing: border-box;
-  border-bottom-style:solid;
-  border-width:1rpx;
-  border-color: gainsboro;
 }
 
 .full-View{
@@ -238,7 +235,7 @@ page{
   display: flex;
   flex-direction: column;
   align-items: center;
-background: #DCDCDC;
+  background: gray;
 }
 
 .icon-container .icon{

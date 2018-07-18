@@ -315,7 +315,7 @@ Page({
   plan: function () {
     console.log('plan');
     let _this = this;
-    app.http('get', `/plan`, {}, res => {
+    app.http('get', `/plan/${this.data.planId}`, {}, res => {
       console.log(res.data.data);
       let resData = res.data.data;
       if (resData == null) {
