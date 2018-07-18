@@ -38,6 +38,7 @@ Page({
     showGeMoreLoadin:false
   },
   onLoad:function(){
+    wx.showLoading({ title: '加载中' });
     this.travelLogs();
     this.downLoadAvatar();
     qqmapsdk = new QQMapWX({
@@ -50,6 +51,7 @@ Page({
   },
   onShow:function(){
     if (app.newTravelPlan == true){
+      wx.showLoading({ title: '加载中' });
       this.setData({
         includePoints: [],
         markers: [],
@@ -351,6 +353,7 @@ Page({
     console.log('plan');
     let _this = this;
     app.http('get', `/plan`,{}, res => {
+        wx.hideLoading();
         console.log(res.data.data);
         let resData = res.data.data;
         if(resData == null){
