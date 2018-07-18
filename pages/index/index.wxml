@@ -9,6 +9,20 @@
         <view>旅行记录</view>
       </view>
     </view>
+
+    <view wx:if="{{show_auth}}" class='auth-container'>
+      <view class='auth-wall'>
+        <view class='auth-tips'>
+          <image src='/image/wechat-logo.png'></image>
+          <view>授权您的公开信息(昵称和头像)</view>
+        </view>
+        <button open-type="getUserInfo" 
+            bindgetuserinfo="getAuthUserInfo" 
+            class='auth-button'>
+          <view>授权登录</view>
+        </button>
+      </view>
+    </view>
   </view>
 
   <!-- 头部 -->
@@ -29,7 +43,6 @@
 
   <!-- 具体步数内容 -->
   <view class='content-container'>
-
     <view class='content'>
       <view class='item' wx:for="{{steps}}" wx:key="{{steps}}">
           <view class='left'>
@@ -40,22 +53,7 @@
           </view>
       </view>
     </view>
-
   </view>
-
-<view wx:if="{{show_auth}}" class='auth-container'>
-  <view class='auth-wall'>
-    <view class='auth-tips'>
-      <image src='/image/wechat-logo.png'></image>
-      <view>授权您的公开信息(昵称和头像)</view>
-    </view>
-    <button open-type="getUserInfo" 
-        bindgetuserinfo="getAuthUserInfo" 
-        class='auth-button'>
-      <view>授权登录</view>
-    </button>
-  </view>
-</view>
 
   <view class='get-more' wx:if="{{showGeMoreLoadin}}">
     <view class='get-more-item'>
@@ -63,5 +61,4 @@
       <view class='loading'>加载中</view>
     </view>
   </view>
-
 </view>

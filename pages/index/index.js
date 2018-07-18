@@ -18,7 +18,9 @@ Page({
   onLoad: function (option) {
     wx.showLoading({ title: '加载中' });
     this.setData({
-      user: wx.getStorageSync('user')
+      user: wx.getStorageSync('user'),
+      todayStep:wx.getStorageSync('todayStep'),
+      totalStep:wx.getStorageSync('totalStep')
     })
     let _this = this;
     this.showAuth();
@@ -159,6 +161,8 @@ Page({
         todayStep: todayStep,
         totalStep: totalStep
         })
+      wx.setStorageSync('todayStep', todayStep);
+      wx.setStorageSync('totalStep', totalStep);
     });
   },
 

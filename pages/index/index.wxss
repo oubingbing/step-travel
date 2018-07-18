@@ -162,7 +162,7 @@
 /** 授权按钮 **/
 .auth-container{
   position: fixed;
-  z-index: 200;
+  z-index: 300;
   width: 100%;
   height: 100%;
   background: gray;

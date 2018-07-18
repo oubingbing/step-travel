@@ -242,10 +242,10 @@ Page({
     let start = '';
     let end = '';
     report.points.map(item=>{
-      if(item.type == 3){
+      if(item.type == 1){
         start = item.name
       }else{
-        if(item.type == 1){
+        if(item.type == 3){
           end = item.name
         }
       }
