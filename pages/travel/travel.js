@@ -38,7 +38,7 @@ Page({
     showGeMoreLoadin:false
   },
   onLoad:function(){
-    this.plan();
+    this.travelLogs();
     this.downLoadAvatar();
     qqmapsdk = new QQMapWX({
       key: 'XCDBZ-EG7C6-2OIS6-MSJDG-OQ2FT-2EBED'
@@ -46,7 +46,7 @@ Page({
     this.getLocation();
   },
   onReady: function (e) {
-    this.travelLogs();
+    this.plan();
   },
   onShow:function(){
     if (app.newTravelPlan == true){
@@ -102,6 +102,9 @@ Page({
 
   ifShowTravelLocation:function(){
     let show = this.data.showTravelLocation;
+    this.setData({
+      markers:[]
+    })
     if (!show){
       this.setData({
         showTravelLocation:true,
@@ -117,6 +120,9 @@ Page({
 
   ifShowTravelLabel:function(){
     let show = this.data.showTravelLabel;
+    this.setData({
+      markers: []
+    })
     console.log()
     if (!show) {
       this.setData({
@@ -558,6 +564,7 @@ Page({
             latitude: planPoints[0].latitude,
             longitude: planPoints[0].longitude,
             includePoints: includePoints,
+            //markers: notTravelLogMarkers,
             markers: notLabelMarkers,
             planId:resData.id,
             plan: resData,
