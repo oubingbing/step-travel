@@ -274,7 +274,6 @@ Page({
       }
     })
 
-
       this.setData({
         showReport:true,
         showMap:false
@@ -312,11 +311,13 @@ Page({
       ctx.fillText(start, windowWidth / 2, 155)
       ctx.drawImage('/image/jiantou.png', (windowWidth / 2) - (windowWidth / 30), 160, 20, 20);
       ctx.fillText(end, windowWidth / 2, 195)
-      ctx.fillText(`旅行了${report.travel.province}个省，${report.travel.city}座城市`, windowWidth / 2, 240)
-      ctx.fillText(`住了${report.poi.hotel}个酒店`, windowWidth / 2, 270)
-      ctx.fillText(`游玩了${report.poi.view}个景点`, windowWidth / 2, 300)
-      ctx.fillText(`下了${report.poi.food}次馆子`, windowWidth / 2, 330)
-      ctx.fillText(`行程：${report.travel.distance}公里`, (windowWidth / 2) - 70, 360)
+      ctx.fillText(`旅行了 ${report.travel.province} 个省，${report.travel.city} 座城市`, windowWidth / 2, 240)
+      ctx.fillText(`住了 ${report.poi.hotel} 个酒店`, windowWidth / 2, 270)
+      ctx.fillText(`游玩了 ${report.poi.view} 个景点`, windowWidth / 2, 300)
+      ctx.fillText(`下了 ${report.poi.food} 次馆子`, windowWidth / 2, 330)
+
+      ctx.setFontSize(17)
+      ctx.fillText(`行程：${report.travel.distance} 公里`, (windowWidth / 2) - 70, 360)
       ctx.fillText(`步数：${report.travel.step}`, (windowWidth / 2)+70, 360)
       ctx.save();
       ctx.setFillStyle('#CD2626')

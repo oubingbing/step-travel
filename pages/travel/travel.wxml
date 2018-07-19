@@ -44,10 +44,10 @@
             <view class='travel-log'>
               <view class='travel-point'>
                 <view class='left-item'>
-                  <view>东度:{{item.format_latitude}}</view>
+                  <view>东经:{{item.format_latitude}}</view>
                 </view>
                 <view class='rightitem'>
-                  <view>北度:{{item.format_longitude}}</view>
+                  <view>北纬:{{item.format_longitude}}</view>
                 </view>
               </view>
 
@@ -95,18 +95,20 @@
                   </view>
                 </view>
               </view>
-
             </view>
           </view>
       </view>
-
     </view>
-
   </view>
 
 
   <view class='canvas-container' wx:if="{{showReport}}">
-    <canvas class='convas' canvas-id="myCanvas" bindlongtap='saveReport' bindtap='hideReport' style="border:none" wx:if="{{showReport}}"/>
+    <canvas class='convas' 
+            canvas-id="myCanvas" 
+            bindlongtap='saveReport' 
+            bindtap='hideReport' 
+            style="border:none" 
+            wx:if="{{showReport}}"/>
     <view class='long-tap-tip'>长按图片保存</view>
   </view>
 

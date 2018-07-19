@@ -278,6 +278,19 @@ page{
   background:rgba(2,2,2,0.8);
 }
 
+.convas-save{
+  width: 100%;
+  border-radius: 5rpx;
+  height: 100%;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  background: darkgray;
+  background-repeat:no-repeat; 
+  background-size:100% 100%;
+  background:rgba(2,2,2,0.8);
+}
+
 .long-tap-tip{
   color: white;
 }
