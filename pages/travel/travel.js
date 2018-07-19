@@ -35,11 +35,19 @@ Page({
     fullView:'full-view',
     harfView:'harf-view',
     showFinish:false,
-    showGeMoreLoadin:false
+    showGeMoreLoadin:false,
+    showTips: false
   },
   onLoad:function(){
+    let tips = wx.getStorageSync('tips');
+    if (tips == '') {
+      this.setData({
+        showTips: true
+      })
+    }
+
     wx.showLoading({ title: '加载中' });
-    this.travelLogs();
+    this.plan();
     this.downLoadAvatar();
     qqmapsdk = new QQMapWX({
       key: 'XCDBZ-EG7C6-2OIS6-MSJDG-OQ2FT-2EBED'
@@ -47,7 +55,7 @@ Page({
     this.getLocation();
   },
   onReady: function (e) {
-    this.plan();
+    this.travelLogs();
   },
   onShow:function(){
     if (app.newTravelPlan == true){
@@ -87,6 +95,19 @@ Page({
       this.travelLogs();
       app.newTravelPlan = false;
     }
+  },
+
+  hideTips: function () {
+    wx.setStorageSync('tips', 'not show');
+    this.setData({
+      showTips: false
+    })
+  },
+
+  helpMe:function(){
+    this.setData({
+      showTips: true
+    })
   },
 
   changeView:function(){

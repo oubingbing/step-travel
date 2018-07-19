@@ -35,7 +35,7 @@
         </view>
         <view class='total-step'>
           <view class='label'>累计</view>
-          <view class='step'>{{totalStep}}</view>
+          <view class='step'>{{totalStep}}万</view>
         </view>
       </view>
     </view>

@@ -16,17 +16,9 @@ Page({
       width: 3,
       dottedLine: true,
       arrowLine:true
-    }],
-    showTips:false
+    }]
   },
   onLoad: function () {
-    let tips = wx.getStorageSync('tips');
-    if(tips == ''){
-      this.setData({
-        showTips:true
-      })
-    }
-
     let _this = this;
     wx.getLocation({
       type: 'wgs84',
@@ -205,11 +197,5 @@ Page({
         }
 
       });
-  },
-  hideTips:function(){
-    wx.setStorageSync('tips', 'not show');
-    this.setData({
-      showTips:false
-    })
   }
 })
