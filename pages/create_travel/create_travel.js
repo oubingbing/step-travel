@@ -194,6 +194,13 @@ Page({
             wx.hideLoading();
             wx.navigateBack({ comeBack: true });
           },1000)
+        }else{
+          wx.showLoading({
+            title: res.data.error_message,
+          });
+          setTimeout(function () {
+            wx.hideLoading();
+          }, 1500)
         }
 
       });
