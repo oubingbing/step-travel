@@ -50,7 +50,7 @@ Page({
     this.plan();
     this.downLoadAvatar();
     qqmapsdk = new QQMapWX({
-      key: 'XCDBZ-EG7C6-2OIS6-MSJDG-OQ2FT-2EBED'
+      key: '腾讯地图开发id'
     });
     this.getLocation();
   },
