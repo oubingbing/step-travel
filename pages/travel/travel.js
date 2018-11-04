@@ -5,6 +5,7 @@ var qqmapsdk;
 
 Page({
   data: {
+    user:'',
     latitude: 0,
     longitude: 0,
     includePoints: [],
@@ -45,6 +46,10 @@ Page({
         showTips: true
       })
     }
+
+    this.setData({
+      user: wx.getStorageSync('user')
+    })
 
     wx.showLoading({ title: '加载中' });
     this.plan();
@@ -385,6 +390,9 @@ Page({
           return false;
         }
 
+        let avatar = this.data.user.avatar;
+        console.log(avatar)
+
         if(res.data.error_code == 0){
           let travelLogMarkers = _this.data.travelLogMarkers;
           let polyline = _this.data.polyline;
@@ -405,11 +413,11 @@ Page({
               if(item.name != null){
                 travelLogMarkers.push({
                   id: key,
-                  iconPath: '/image/traveling.png',
+                  iconPath: avatar,
                   latitude: item.latitude,
                   longitude: item.longitude,
-                  width: 30,
-                  height: 30,
+                  width: 25,
+                  height: 25,
                   label: {
                     content: item.name,
                     fontSize: 8,
@@ -422,11 +430,11 @@ Page({
               }else{
                 travelLogMarkers.push({
                   id: key,
-                  iconPath: '/image/traveling.png',
+                  iconPath: avatar,
                   latitude: item.latitude,
                   longitude: item.longitude,
-                  width: 30,
-                  height: 30
+                  width: 25,
+                  height: 25
                 });
               }
               
@@ -529,12 +537,12 @@ Page({
             console.log('这到底是啥：' + travelLogs[travelLogs.length - 1].name);
             //没有旅途点的标记
             notTravelLogMarkers.push({
-              iconPath: '/image/traveling.png',
+              iconPath: avatar,
               id: travelLogLength + 1,
               latitude: travelLogs[travelLogs.length - 1].latitude,
               longitude: travelLogs[travelLogs.length - 1].longitude,
-              width: 30,
-              height: 30,
+              width: 25,
+              height: 25,
               label: {
                 content: travelLogs[travelLogs.length - 1].name,
                 fontSize: 8,
@@ -546,12 +554,12 @@ Page({
             }); 
             
             notLabelMarkers.push({
-              iconPath: '/image/traveling.png',
+              iconPath: avatar,
               id: travelLogLength + 1,
               latitude: travelLogs[travelLogs.length - 1].latitude,
               longitude: travelLogs[travelLogs.length - 1].longitude,
-              width: 30,
-              height: 30
+              width: 25,
+              height: 25
             })
           }
 

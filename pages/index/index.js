@@ -27,10 +27,10 @@ Page({
     this.statistic();
     this.steps(_this);
     this.loginForRunData();
+    this.getPersonalInfo();
   },
 
   onReady: function (e) {
-    this.getPersonalInfo();
   },
 
   /**
