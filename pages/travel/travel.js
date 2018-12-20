@@ -289,9 +289,6 @@ Page({
       let windowHeight = wx.getSystemInfoSync().windowHeight;
       let avatar = this.data.avatar;
 
-      console.log('头像：'+avatar);
-      console.log(wx.getSystemInfoSync());
-      console.log('高度：' + windowHeight);
       const ctx = wx.createCanvasContext('myCanvas')
 
       //ctx.setStrokeStyle('red')
